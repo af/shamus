@@ -1,0 +1,17 @@
+{
+  "name": "Checkpoint",
+  "main": "index.html",
+  "window": {
+    "always-on-top": true,
+    "toolbar": false,
+    "frame": true,
+    "width": 400,
+    "height": 100,
+    "position": "mouse",
+    "min_width": 400,
+    "min_height": 100,
+    "max_width": 400,
+    "max_height": 800
+  }
+}
+
