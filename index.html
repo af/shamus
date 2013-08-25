@@ -1,31 +1,25 @@
 <!DOCTYPE html>
 <html>
 <body>
-<h1>Hello World!</h1>
-    We are using node.js <script>document.write(process.version)</script>
-    <button>resize</button>
     <script>
         // To build & run:
         // $ zip app.nw index.html package.json
         // $ ./node-webkit.app/Contents/MacOS/node-webkit app.nw
 
-        // https://github.com/rogerwang/node-webkit/wiki/Window
+        // Setup our window object.
+        // See https://github.com/rogerwang/node-webkit/wiki/Window
         var gui = require('nw.gui');
         var win = gui.Window.get();
         win.title = 'Checkpoint';
 
-        var button = document.querySelector('button');
-        button.addEventListener('click', function(evt) {
-            win.height = 300;
-        });
-
+        var watchRegex = new RegExp('\.js$');   // TODO: make this user-specifiable
         var fs = require('fs');
-        fs.readdir('.', function(e,d) { console.log(d); });
-
-        // TODO:
-        // * watch dir for changes
-        // * trigger command on change
-        // * :
+        fs.watch('.', function(evt, filename) {
+            if (watchRegex.test(filename)) {
+                // TODO: trigger user-specified command here
+                console.log(filename + ' changed!');
+            }
+        });
     </script>
 </body>
 </html>
