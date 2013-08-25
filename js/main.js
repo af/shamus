@@ -26,3 +26,7 @@ fs.watch('.', function(evt, filename) {
     }
 });
 
+var $ = require('littledom');
+$('.status').on('click', function(evt) {
+    $(evt.target).toggleClass('running');
+});
