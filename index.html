@@ -1,34 +1,14 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <meta charset="utf-8" />
+    <title>Checkpoint</title>
+    <link rel="stylesheet" href="css/main.css" type="text/css" media="screen" >
+</head>
+
 <body>
-    <script>
-        // To build & run:
-        // $ zip app.nw index.html package.json
-        // $ ./node-webkit.app/Contents/MacOS/node-webkit app.nw
+    <div class="status ok"></div>
 
-        // Setup our window object.
-        // See https://github.com/rogerwang/node-webkit/wiki/Window
-        var gui = require('nw.gui');
-        var win = gui.Window.get();
-        win.title = 'Checkpoint';
-
-        var fs = require('fs');
-        var exec = require('child_process').exec;
-
-        // TODO: make these user-specifiable:
-        var watchRegex = new RegExp('\.js$');
-        var userCmd = 'mocha test.js -R tap';
-
-        fs.watch('.', function(evt, filename) {
-            if (watchRegex.test(filename)) {
-                console.log(filename + ' changed!');
-                exec(userCmd, function(err, stdout, stderr) {
-                    if (err) return console.error('ERROR WHEN RUNNING TESTS');
-                    console.log('STDOUT:', stdout);
-                    // TODO: parse the TAP output here
-                });
-            }
-        });
-    </script>
+    <script src="js/main.js"></script>
 </body>
 </html>

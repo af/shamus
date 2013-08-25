@@ -1,0 +1,35 @@
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+.status {
+  width: 100px;
+  height: 100px;
+  padding: 40px;
+  color: rgba(255,255,255,0.70);
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.40);
+  font-size: 20px;
+  font-weight: bold;
+}
+.status.ok {
+  background: #8cba7b;
+}
+.status.ok:before {
+  content: '√';
+}
+.status.running {
+  background: #ff0;
+}
+.status.running:before {
+  content: 'running';
+}
+.status.error {
+  background: #f00;
+}
+.status.error:before {
+  content: 'X';
+}
