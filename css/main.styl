@@ -36,6 +36,12 @@ html, body
         div:before
             content: '√'
 
+    &.error
+        background: red
+
+        div:before
+            content: 'X'
+
     &.running
         background: #cccf49
 
@@ -44,9 +50,3 @@ html, body
 
         div:before
             content: 'r'
-
-    &.error
-        background: red
-
-        div:before
-            content: 'X'

@@ -40,6 +40,12 @@ body {
 .status.ok div:before {
   content: '√';
 }
+.status.error {
+  background: #f00;
+}
+.status.error div:before {
+  content: 'X';
+}
 .status.running {
   background: #cccf49;
 }
@@ -48,10 +54,4 @@ body {
 }
 .status.running div:before {
   content: 'r';
-}
-.status.error {
-  background: #f00;
-}
-.status.error div:before {
-  content: 'X';
 }

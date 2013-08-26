@@ -8,25 +8,44 @@ var gui = require('nw.gui');
 var win = gui.Window.get();
 win.title = 'Checkpoint';
 
-var bus = new require('events').EventEmitter;
+var EE = require('events').EventEmitter;
+var bus = new EE();
 var fs = require('fs');
-var exec = require('child_process').exec;
+var spawn = require('child_process').spawn;
 
 // TODO: make these user-specifiable:
 var watchRegex = new RegExp('\.js$');
 var userCmd = 'mocha test.js -R tap';
 
+function runTests() {
+    bus.emit('running');
+    var cmd = spawn('mocha', ['test.js', '-R', 'tap']);
+    cmd.stdout.pipe(require('tub')(function(x) {
+        console.log(require('util').inspect(x, { depth: null }));
+        bus.emit(x.ok ? 'ok' : 'error');
+    }));
+}
+
+runTests();     // Run tests on startup
+
 fs.watch('.', function(evt, filename) {
     if (watchRegex.test(filename)) {
         console.log(filename + ' changed!');
-        exec(userCmd, function(err, stdout, stderr) {
-            if (err) return console.error('ERROR WHEN RUNNING TESTS');
-            console.log('STDOUT:', stdout);
-        });
+        runTests();
     }
 });
 
+
+// Quick and dirty view code:
 var $ = require('littledom');
-$('.status').on('click', function(evt) {
-    $(evt.target).toggleClass('running');
+var $status = $('.status');
+
+bus.on('running', function() {
+    $status.removeClass('ok error').addClass('running');
+});
+bus.on('ok', function() {
+    $status.removeClass('running error').addClass('ok');
+});
+bus.on('error', function() {
+    $status.removeClass('running ok').addClass('error');
 });

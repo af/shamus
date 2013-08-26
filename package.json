@@ -1,6 +1,7 @@
 {
   "name": "Checkpoint",
   "main": "index.html",
+
   "window": {
     "always-on-top": true,
     "toolbar": false,
@@ -12,6 +13,13 @@
     "min_height": 100,
     "max_width": 400,
     "max_height": 800
+  },
+
+  "dependencies": {
+    "backbone": "1.0",
+    "backprop": "*",
+    "littledom": "*",
+    "tub": "*"
   }
 }
 
