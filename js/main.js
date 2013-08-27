@@ -6,7 +6,7 @@
 // See https://github.com/rogerwang/node-webkit/wiki/Window
 var gui = require('nw.gui');
 var win = gui.Window.get();
-win.title = 'Checkpoint';
+win.title = 'Sentinel';
 
 var EE = require('events').EventEmitter;
 var bus = new EE();
