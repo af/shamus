@@ -8,44 +8,26 @@ var gui = require('nw.gui');
 var win = gui.Window.get();
 win.title = 'Sentinel';
 
-var EE = require('events').EventEmitter;
-var bus = new EE();
-var fs = require('fs');
-var spawn = require('child_process').spawn;
-
-// TODO: make these user-specifiable:
-var watchRegex = new RegExp('\.js$');
-var userCmd = 'mocha test.js -R tap';
-
-function runTests() {
-    bus.emit('running');
-    var cmd = spawn('mocha', ['test.js', '-R', 'tap']);
-    cmd.stdout.pipe(require('tub')(function(x) {
-        console.log(require('util').inspect(x, { depth: null }));
-        bus.emit(x.ok ? 'ok' : 'error');
-    }));
-}
-
-runTests();     // Run tests on startup
-
-fs.watch('.', function(evt, filename) {
-    if (watchRegex.test(filename)) {
-        console.log(filename + ' changed!');
-        runTests();
-    }
+var Task = require('./js/task');
+var t = new Task({
+    name: 'Example mocha runner',
+    command: 'mocha test.js -R tap',
+    watchMatcher: '\.js$'
 });
 
+t.watch();
+process.nextTick(function() { t.run(); });      // Not sure why nextTick is needed...
 
 // Quick and dirty view code:
 var $ = require('littledom');
 var $status = $('.status');
 
-bus.on('running', function() {
-    $status.removeClass('ok error').addClass('running');
-});
-bus.on('ok', function() {
-    $status.removeClass('running error').addClass('ok');
-});
-bus.on('error', function() {
-    $status.removeClass('running ok').addClass('error');
+// TODO: refactor to Backbone view
+t.on('change:isRunning', function(task) {
+    console.log('in view handler');
+    if (task.isRunning) $status.removeClass('ok error').addClass('running');
+    else {
+        if (task.isOK) $status.removeClass('running error').addClass('ok');
+        else $status.removeClass('running ok').addClass('error');
+    }
 });
