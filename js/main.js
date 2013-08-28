@@ -15,8 +15,8 @@ var t = new Task({
     watchMatcher: '\.js$'
 });
 
+setTimeout(function() { t.run(); }, 100);      // Not sure why timeout is needed for tests to work...
 t.watch();
-process.nextTick(function() { t.run(); });      // Not sure why nextTick is needed...
 
 // Quick and dirty view code:
 var $ = require('littledom');
