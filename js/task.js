@@ -1,5 +1,5 @@
-var fs = require('fs');
 var spawn = require('child_process').spawn;
+var watch = require('node-watch');
 
 var Backbone = require('backbone');
 var Backprop = require('backprop');
@@ -15,10 +15,8 @@ module.exports = Backbone.Model.extend({
 
     watch: function() {
         var task = this;
-        console.log('WATCHING');
-
         var watchRegex = new RegExp(task.watchMatcher);
-        fs.watch('.', function(evt, filename) {
+        watch('.', function(filename) {
             console.log(filename + ' changed!');
             if (watchRegex.test(filename)) {
                 task.run();
@@ -27,9 +25,9 @@ module.exports = Backbone.Model.extend({
     },
 
     run: function() {
-        console.log('RUNNING');
         var task = this;
         task.isRunning = true;
+        // TODO: throttling & not running multiple times simultaneously
         // TODO: parse string to cmd & args
         var cmd = spawn('mocha', ['test.js', '-R', 'tap']);
 

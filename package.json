@@ -1,5 +1,5 @@
 {
-  "name": "Checkpoint",
+  "name": "Sentinel",
   "main": "index.html",
 
   "window": {
@@ -19,6 +19,7 @@
     "backbone": "1.0",
     "backprop": "*",
     "littledom": "*",
+    "node-watch": "0.3.4",
     "tub": "*"
   }
 }
