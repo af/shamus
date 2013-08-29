@@ -9,6 +9,8 @@ var win = gui.Window.get();
 win.title = 'Sentinel';
 
 var Task = require('./js/task');
+var TaskView = require('./js/taskview');
+
 var t = new Task({
     name: 'Example mocha runner',
     command: 'mocha tests -R tap',
@@ -18,16 +20,9 @@ var t = new Task({
 setTimeout(function() { t.run(); }, 100);      // Not sure why timeout is needed for tests to work...
 t.watch();
 
-// Quick and dirty view code:
+var Backbone = require('backbone');
 var $ = require('littledom');
-var $status = $('.status');
+Backbone.$ = $;
 
-// TODO: refactor to Backbone view
-t.on('change:isRunning', function(task) {
-    console.log('in view handler');
-    if (task.isRunning) $status.removeClass('ok error').addClass('running');
-    else {
-        if (task.isOK) $status.removeClass('running error').addClass('ok');
-        else $status.removeClass('running ok').addClass('error');
-    }
-});
+var v = new TaskView({ model: t });
+$('#taskContainer')[0].appendChild(v.el);
