@@ -11,7 +11,7 @@ win.title = 'Sentinel';
 var Task = require('./js/task');
 var t = new Task({
     name: 'Example mocha runner',
-    command: 'mocha test.js -R tap',
+    command: 'mocha tests -R tap',
     watchMatcher: '\.js$'
 });
 

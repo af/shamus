@@ -24,15 +24,24 @@ module.exports = Backbone.Model.extend({
         });
     },
 
+    parseCommand: function(cmdString) {
+        var parts = cmdString.split(' ');
+        return {
+            cmd: parts[0],
+            args: parts.slice(1)
+        };
+    },
+
     run: function() {
         var task = this;
         task.isRunning = true;
         // TODO: throttling & not running multiple times simultaneously
         // TODO: parse string to cmd & args
-        var cmd = spawn('mocha', ['test.js', '-R', 'tap']);
+        var parsedCommand = this.parseCommand(this.command);
+        var taskObj = spawn(parsedCommand.cmd, parsedCommand.args);
 
         // TODO: pluggable stdout parser
-        cmd.stdout.pipe(require('tub')(function(x) {
+        taskObj.stdout.pipe(require('tub')(function(x) {
             console.log(require('util').inspect(x, { depth: null }));
             task.isOK = x.ok;
             task.isRunning = false;
