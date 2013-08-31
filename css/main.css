@@ -19,6 +19,7 @@ body {
   list-style: none;
 }
 .status {
+  float: left;
   width: 100px;
   height: 100px;
   padding: 35px 0;

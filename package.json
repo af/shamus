@@ -1,7 +1,6 @@
 {
   "name": "Sentinel",
   "main": "index.html",
-
   "window": {
     "always-on-top": true,
     "toolbar": false,
@@ -14,13 +13,12 @@
     "max_width": 400,
     "max_height": 800
   },
-
   "dependencies": {
     "backbone": "1.0",
     "backprop": "*",
     "littledom": "*",
     "node-watch": "0.3.4",
-    "tub": "*"
+    "tub": "*",
+    "underscore": "~1.5.1"
   }
 }
-
