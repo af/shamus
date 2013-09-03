@@ -14,6 +14,7 @@ var TaskView = require('./js/taskview');
 var t = new Task({
     name: 'Example mocha runner',
     command: 'mocha tests -R tap',
+    parser: 'tap',
     watchMatcher: '\.js$'
 });
 

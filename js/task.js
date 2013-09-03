@@ -5,6 +5,26 @@ var Backbone = require('backbone');
 var Backprop = require('backprop');
 Backprop.monkeypatch(Backbone);
 
+// Rough attempt at pluggable parsers for the output of each task's process:
+var PARSERS = {
+    tap: function(childProcess, task) {
+        var tub = require('tub');
+        childProcess.stdout.pipe(tub(function(x) {
+            console.log(require('util').inspect(x, { depth: null }));
+            task.isOK = x.ok;
+            task.isRunning = false;
+        }));
+    },
+
+    exitcode: function(childProcess, task) {
+        childProcess.on('exit', function(code, signal) {
+            console.log('got exit code ' + code);
+            task.isOK = (code === 0);
+            task.isRunning = false;
+        });
+    }
+}
+
 module.exports = Backbone.Model.extend({
     name: Backbone.property({ coerce: String, default: 'Unnamed task' }),
     command: Backbone.property({ coerce: String }),
@@ -12,6 +32,7 @@ module.exports = Backbone.Model.extend({
     isRunning: Backbone.property({ coerce: Boolean, default: false }),
     isActive: Backbone.property({ coerce: Boolean, default: true }),
     isOK: Backbone.property({ coerce: Boolean }),
+    parser: Backbone.property({ choices: ['tap', 'exitcode'], default: 'exitcode' }),
 
     watch: function() {
         var task = this;
@@ -36,15 +57,10 @@ module.exports = Backbone.Model.extend({
         var task = this;
         task.isRunning = true;
         // TODO: throttling & not running multiple times simultaneously
-        // TODO: parse string to cmd & args
-        var parsedCommand = this.parseCommand(this.command);
-        var taskObj = spawn(parsedCommand.cmd, parsedCommand.args);
+        var splitCmd = this.parseCommand(this.command);
+        var childProcess = spawn(splitCmd.cmd, splitCmd.args);
 
-        // TODO: pluggable stdout parser
-        taskObj.stdout.pipe(require('tub')(function(x) {
-            console.log(require('util').inspect(x, { depth: null }));
-            task.isOK = x.ok;
-            task.isRunning = false;
-        }));
+        var parser = PARSERS[this.parser];
+        parser(childProcess, task);
     }
 });
