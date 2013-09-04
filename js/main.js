@@ -18,12 +18,24 @@ var t = new Task({
     watchMatcher: '\.js$'
 });
 
+var t2 = new Task({
+    name: 'Sentinel stylus',
+    command: 'stylus css',
+    parser: 'exitcode',
+    watchMatcher: '\\.styl$'
+});
+
 setTimeout(function() { t.run(); }, 100);      // Not sure why timeout is needed for tests to work...
 t.watch();
+
+setTimeout(function() { t2.run(); }, 100);      // Not sure why timeout is needed for tests to work...
+t2.watch();
 
 var Backbone = require('backbone');
 var $ = require('littledom');
 Backbone.$ = $;
 
 var v = new TaskView({ model: t });
+var v2 = new TaskView({ model: t2 });
 $('#taskContainer')[0].appendChild(v.el);
+$('#taskContainer')[0].appendChild(v2.el);

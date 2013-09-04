@@ -18,6 +18,9 @@ body {
   margin: 0;
   list-style: none;
 }
+#taskContainer li {
+  clear: both;
+}
 .status {
   float: left;
   width: 100px;
