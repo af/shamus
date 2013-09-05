@@ -25,11 +25,9 @@ var t2 = new Task({
     watchMatcher: '\\.styl$'
 });
 
-setTimeout(function() { t.run(); }, 100);      // Not sure why timeout is needed for tests to work...
-t.watch();
+t.start();
+t2.start();
 
-setTimeout(function() { t2.run(); }, 100);      // Not sure why timeout is needed for tests to work...
-t2.watch();
 
 var Backbone = require('backbone');
 var $ = require('littledom');

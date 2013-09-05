@@ -62,5 +62,14 @@ module.exports = Backbone.Model.extend({
 
         var parser = PARSERS[this.parser];
         parser(childProcess, task);
+    },
+
+    start: function() {
+        var task = this;
+
+        // Not sure why timeout is needed here, but we get errors from
+        // Mocha when it's not present...
+        setTimeout(function() { task.run(); }, 300);
+        task.watch();
     }
 });
