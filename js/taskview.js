@@ -4,7 +4,7 @@ var _ = require('underscore');
 module.exports = Backbone.View.extend({
     tagName: 'li',
     template: _.template(
-        '<div class="status"> <div></div> </div> <%= name %>'
+        '<div class="status"> <div></div> </div> <div><h1><%= name %></h1></div>'
     ),
 
     initialize: function() {

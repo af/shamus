@@ -12,6 +12,7 @@ body {
   margin: 0;
   padding: 0;
   background: linear-gradient(#ddd, #ccc);
+  font-family: 'Open Sans', sans-serif;
 }
 #taskContainer {
   padding: 0;
@@ -20,12 +21,29 @@ body {
 }
 #taskContainer li {
   clear: both;
+  border-bottom: 1px solid rgba(0,0,0,0.30);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.40);
+}
+#taskContainer li:before,
+#taskContainer li:after {
+  content: " ";
+  display: table;
+}
+#taskContainer li:after {
+  clear: both;
+}
+#taskContainer h1 {
+  font-weight: 300;
+  font-size: 1.2rem;
+  line-height: 2;
+  margin: 0 0 0.5rem;
 }
 .status {
   float: left;
   width: 100px;
   height: 100px;
   padding: 35px 0;
+  margin-right: 10px;
   background: #999;
   color: rgba(255,255,255,0.80);
   text-shadow: 1px 1px 2px rgba(0,0,0,0.40);
