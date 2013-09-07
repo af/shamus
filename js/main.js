@@ -22,11 +22,10 @@ var t2 = new Task({
     name: 'Sentinel stylus',
     command: 'stylus css',
     parser: 'exitcode',
-    watchMatcher: '\\.styl$'
+    watchMatcher: '\.styl$'
 });
 
-t.start();
-t2.start();
+Task.startLoop();
 
 
 var Backbone = require('backbone');
