@@ -12,7 +12,7 @@ var Task = require('./js/task');
 var TaskView = require('./js/taskview');
 
 var t = new Task({
-    name: 'Example mocha runner',
+    name: 'Sentinel mocha runner',
     command: 'mocha tests -R tap',
     parser: 'tap',
     watchMatcher: '\\.js$'
@@ -25,6 +25,13 @@ var t2 = new Task({
     watchMatcher: '\\.styl$'
 });
 
+var t3 = new Task({
+    name: 'Sentinel JSHint',
+    command: 'jshint js',
+    parser: 'exitcode',
+    watchMatcher: '\\.js$'
+});
+
 Task.startLoop();
 
 
@@ -34,5 +41,7 @@ Backbone.$ = $;
 
 var v = new TaskView({ model: t });
 var v2 = new TaskView({ model: t2 });
+var v3 = new TaskView({ model: t3 });
 $('#taskContainer')[0].appendChild(v.el);
 $('#taskContainer')[0].appendChild(v2.el);
+$('#taskContainer')[0].appendChild(v3.el);
