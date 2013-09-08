@@ -1,0 +1,22 @@
+{
+    "tasks": [
+        {
+            "name": "Mocha tests (sentinel)",
+            "command": "mocha tests -R tap",
+            "parser": "tap",
+            "watchMatcher": "\\.js$"
+        },
+        {
+            "name": "Stylus (sentinel)",
+            "command": "stylus css",
+            "parser": "exitcode",
+            "watchMatcher": "\\.styl$"
+        },
+        {
+            "name": "JSHint (Sentinel)",
+            "command": "jshint js",
+            "parser": "exitcode",
+            "watchMatcher": "\\.js$"
+        }
+    ]
+}
