@@ -15,14 +15,14 @@ var t = new Task({
     name: 'Example mocha runner',
     command: 'mocha tests -R tap',
     parser: 'tap',
-    watchMatcher: '\.js$'
+    watchMatcher: '\\.js$'
 });
 
 var t2 = new Task({
     name: 'Sentinel stylus',
     command: 'stylus css',
     parser: 'exitcode',
-    watchMatcher: '\.styl$'
+    watchMatcher: '\\.styl$'
 });
 
 Task.startLoop();
