@@ -17,16 +17,16 @@ var PARSERS = {
         var tub = require('tub');
         childProcess.stdout.pipe(tub(function(x) {
             console.log(require('util').inspect(x, { depth: null }));
-            task.isOK = x.ok;
-            task.isRunning = false;
+            if (x.ok) task.success();
+            else task.error(x);     // TODO: format error output
         }));
     },
 
     exitcode: function(childProcess, task) {
         childProcess.on('exit', function(code, signal) {
             console.log('got exit code ' + code);
-            task.isOK = (code === 0);
-            task.isRunning = false;
+            if (code === 0) task.success();
+            else task.error('status code fail');      // TODO: proper output
         });
     }
 };
@@ -62,6 +62,17 @@ module.exports = Backbone.Model.extend({
             cmd: parts[0],
             args: parts.slice(1)
         };
+    },
+
+    success: function() {
+        this.isOK = true;
+        this.isRunning = false;
+    },
+
+    error: function(msg) {
+        this.isOK = false;
+        this.isRunning = false;
+        this.trigger('error', this, msg);
     },
 
     run: function() {
