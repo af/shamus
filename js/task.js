@@ -18,15 +18,29 @@ var PARSERS = {
         childProcess.stdout.pipe(tub(function(x) {
             console.log(require('util').inspect(x, { depth: null }));
             if (x.ok) task.success();
-            else task.error(x);     // TODO: format error output
+            else {
+                var output = x.summary;
+                x.failed.forEach(function(f) { output += ('\n\n' + f.info); });
+                task.error(output);     // TODO: format error output
+            }
         }));
     },
 
     exitcode: function(childProcess, task) {
+        var bufferedStderr = '';
+
+        // TODO: this assumes data will be printed to stderr, not stdout
+        childProcess.stderr.on('data', function(d) {
+            bufferedStderr += d;
+        });
+
         childProcess.on('exit', function(code, signal) {
-            console.log('got exit code ' + code);
-            if (code === 0) task.success();
-            else task.error('status code fail');      // TODO: proper output
+            // Need the timeout to make sure we capture all stderr output.
+            // Often the exit event comes before the last data is returned.
+            setTimeout(function() {
+                if (code === 0) task.success();
+                else task.error(bufferedStderr);
+            }, 100);
         });
     }
 };
