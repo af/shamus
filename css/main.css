@@ -80,6 +80,12 @@ body {
 .status.running div:before {
   content: 'r';
 }
+.errorMsg {
+  font-family: monospace;
+  font-size: 12px;
+  white-space: pre;
+  color: #733;
+}
 @-webkit-keyframes rotate {
   0% {
     -webkit-transform: rotate(0deg);
