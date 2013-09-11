@@ -16,7 +16,7 @@
   "dependencies": {
     "backbone": "1.0",
     "backprop": "*",
-    "littledom": "*",
+    "littledom": "af/littledom",
     "node-watch": "0.3.4",
     "tub": "*",
     "underscore": "~1.5.1"

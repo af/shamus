@@ -25,7 +25,7 @@ module.exports = Backbone.View.extend({
         else {
             if (task.isOK) {
                 this.$status.removeClass('running error').addClass('ok');
-                this.$error.html(' ');
+                this.$error.html('');
             } else this.$status.removeClass('running ok').addClass('error');
         }
     },
