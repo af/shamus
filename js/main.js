@@ -7,7 +7,7 @@
 var fs = require('fs');
 var gui = require('nw.gui');
 var win = gui.Window.get();
-win.title = 'Sentinel';
+win.title = require('./package.json').name;
 
 var Task = require('./js/task');
 var TaskView = require('./js/taskview');
@@ -25,3 +25,8 @@ taskList.tasks.forEach(function(taskSpec) {
 });
 
 Task.startLoop();
+
+
+// Position the window in the top right of the screen on startup.
+// TODO: make this a config option
+window.moveTo(screen.width - window.outerWidth, 0);
