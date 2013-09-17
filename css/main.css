@@ -23,6 +23,7 @@ body {
   clear: both;
   border-bottom: 1px solid rgba(0,0,0,0.30);
   box-shadow: 0 1px 0 rgba(255,255,255,0.40);
+  position: relative;
 }
 #taskContainer li:before,
 #taskContainer li:after {
@@ -80,11 +81,18 @@ body {
 .status.running div:before {
   content: 'r';
 }
-.errorMsg {
+.errorMsg:not(:empty) {
   font-family: monospace;
   font-size: 12px;
   white-space: pre;
   color: #733;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255,255,255,0.40);
+  height: -webkit-calc(80%);
+  width: 380px;
+  overflow: auto;
 }
 @-webkit-keyframes rotate {
   0% {
