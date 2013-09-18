@@ -28,18 +28,18 @@ var PARSERS = {
 
     exitcode: function(childProcess, task) {
         var bufferedStderr = '';
+        var bufferedStdout = '';
 
-        // TODO: this assumes data will be printed to stderr, not stdout
-        childProcess.stderr.on('data', function(d) {
-            bufferedStderr += d;
-        });
+        // Buffer both stderr and stdout:
+        childProcess.stderr.on('data', function(d) { bufferedStderr += d; });
+        childProcess.stdout.on('data', function(d) { bufferedStdout += d; });
 
         childProcess.on('exit', function(code, signal) {
-            // Need the timeout to make sure we capture all stderr output.
+            // Need the timeout to make sure we capture all stderr/stdout output.
             // Often the exit event comes before the last data is returned.
             setTimeout(function() {
                 if (code === 0) task.success();
-                else task.error(bufferedStderr);
+                else task.error(bufferedStderr || bufferedStdout);
             }, 100);
         });
     }
