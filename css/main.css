@@ -33,6 +33,10 @@ body {
 #taskContainer li:after {
   clear: both;
 }
+#taskContainer li.hasError {
+  min-height: 300px;
+  background: #eee;
+}
 #taskContainer h1 {
   font-weight: 300;
   font-size: 1.2rem;
@@ -41,9 +45,9 @@ body {
 }
 .status {
   float: left;
-  width: 100px;
-  height: 100px;
-  padding: 35px 0;
+  width: 50px;
+  height: 50px;
+  padding: 10px 0;
   margin-right: 10px;
   background: #999;
   color: rgba(255,255,255,0.80);
@@ -82,16 +86,16 @@ body {
   content: 'r';
 }
 .errorMsg:not(:empty) {
+  position: absolute;
+  top: 30px;
+  left: 50px;
+  height: -webkit-calc(80%);
+  width: 350px;
+  padding: 10px;
+  white-space: pre;
   font-family: monospace;
   font-size: 12px;
-  white-space: pre;
   color: #733;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: rgba(255,255,255,0.40);
-  height: -webkit-calc(80%);
-  width: 380px;
   overflow: auto;
 }
 @-webkit-keyframes rotate {

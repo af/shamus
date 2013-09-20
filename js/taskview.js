@@ -17,10 +17,12 @@ module.exports = Backbone.View.extend({
     },
 
     showError: function(task, message) {
+        this.$el.addClass('hasError');
         this.$error.html(message);
     },
 
     updateStatus: function(task) {
+        this.$el.removeClass('hasError');
         if (task.isRunning) this.$status.removeClass('ok error').addClass('running');
         else {
             if (task.isOK) {
