@@ -22,13 +22,14 @@ module.exports = Backbone.View.extend({
     },
 
     updateStatus: function(task) {
-        this.$el.removeClass('hasError');
         if (task.isRunning) this.$status.removeClass('ok error').addClass('running');
         else {
             if (task.isOK) {
+                this.$el.removeClass('hasError');
                 this.$status.removeClass('running error').addClass('ok');
                 this.$error.html('');
             } else this.$status.removeClass('running ok').addClass('error');
+            this.trigger('changeStatus');
         }
     },
 
