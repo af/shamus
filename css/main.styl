@@ -1,6 +1,6 @@
 $windowWidth = 400px
-$statusWidth = 50px
-$paddingWidth = 10px
+$statusWidth = 40px
+$paddingWidth = 0.5rem
 
 clearfix()
     &:before, &:after
@@ -43,7 +43,7 @@ html, body
 
     h1
         font-weight: 300
-        font-size: 1.2rem
+        font-size: 1rem
         line-height: 2
         margin: 0 0 0.5rem
 
@@ -51,14 +51,14 @@ html, body
     float: left
     width: $statusWidth
     height: $statusWidth
-    padding: 10px 0
-    margin-right: 10px
+    margin-right: $paddingWidth
     background: #999
     color: rgba(255,255,255,0.8)
     text-shadow: 1px 1px 2px rgba(0,0,0,0.4)
     font-family: icons
-    font-size: 30px
+    font-size: 1.5rem
     font-weight: bold
+    line-height: $statusWidth
     text-align: center
     transition: background 0.2s
 
@@ -91,14 +91,14 @@ html, body
 
 .errorMsg:not(:empty)
     position: absolute
-    top: 30px
+    top: 1.5rem
     left: $statusWidth
     height: -webkit-calc(100% - 2*$paddingWidth)
     width: $windowWidth - $statusWidth
     padding: $paddingWidth
     white-space: pre
     font-family: monospace
-    font-size: 12px
+    font-size: 0.8rem
     color: #773333
     overflow: auto
 

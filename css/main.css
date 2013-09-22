@@ -39,22 +39,22 @@ body {
 }
 #taskContainer h1 {
   font-weight: 300;
-  font-size: 1.2rem;
+  font-size: 1rem;
   line-height: 2;
   margin: 0 0 0.5rem;
 }
 .status {
   float: left;
-  width: 50px;
-  height: 50px;
-  padding: 10px 0;
-  margin-right: 10px;
+  width: 40px;
+  height: 40px;
+  margin-right: 0.5rem;
   background: #999;
   color: rgba(255,255,255,0.80);
   text-shadow: 1px 1px 2px rgba(0,0,0,0.40);
   font-family: icons;
-  font-size: 30px;
+  font-size: 1.5rem;
   font-weight: bold;
+  line-height: 40px;
   text-align: center;
   transition: background 0.2s;
 }
@@ -87,14 +87,14 @@ body {
 }
 .errorMsg:not(:empty) {
   position: absolute;
-  top: 30px;
-  left: 50px;
-  height: -webkit-calc(80%);
-  width: 350px;
-  padding: 10px;
+  top: 1.5rem;
+  left: 40px;
+  height: -webkit-calc(99%);
+  width: 360px;
+  padding: 0.5rem;
   white-space: pre;
   font-family: monospace;
-  font-size: 12px;
+  font-size: 0.8rem;
   color: #733;
   overflow: auto;
 }
