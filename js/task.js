@@ -38,8 +38,9 @@ var PARSERS = {
             // Need the timeout to make sure we capture all stderr/stdout output.
             // Often the exit event comes before the last data is returned.
             setTimeout(function() {
+                var errorOutput = (bufferedStderr || bufferedStdout || '').trim();
                 if (code === 0) task.success();
-                else task.error(bufferedStderr || bufferedStdout);
+                else task.error(errorOutput);
             }, 100);
         });
     }
