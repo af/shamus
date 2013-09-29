@@ -47,13 +47,13 @@ var PARSERS = {
 };
 
 module.exports = Backbone.Model.extend({
-    name: Backbone.property({ coerce: String, 'default': 'Unnamed task' }),
-    command: Backbone.property({ coerce: String }),
-    watchMatcher: Backbone.property({ coerce: String }),
-    isRunning: Backbone.property({ coerce: Boolean, 'default': false }),
-    isActive: Backbone.property({ coerce: Boolean, 'default': true }),
-    isOK: Backbone.property({ coerce: Boolean }),
-    parser: Backbone.property({ choices: ['tap', 'exitcode'], 'default': 'exitcode' }),
+    name: Backprop.String({ default: 'Unnamed task' }),
+    command: Backprop.String(),
+    watchMatcher: Backprop.String(),
+    isRunning: Backprop.Boolean({ default: false }),
+    isActive: Backprop.Boolean({ default: true }),
+    isOK: Backprop.Boolean(),
+    parser: Backprop.String({ choices: ['tap', 'exitcode'], 'default': 'exitcode' }),
 
     initialize: function() {
         var task = this;
