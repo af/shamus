@@ -1,5 +1,9 @@
 var Backbone = require('backbone');
 
+var Task = require('./task');
+var TaskView = require('./taskview');
+
+
 // AppView
 // A Backbone view to manage UI at the app/window level.
 // document.body should be passed in as view.el.
@@ -12,6 +16,19 @@ module.exports = Backbone.View.extend({
 
         this.moveWindow();
         this.resizeWindow();
+    },
+
+    // Set up Task instances from an array of task specs
+    initTasks: function(taskList) {
+        var app = this;
+        var resizeFn = app.resizeWindow.bind(app);
+        taskList.tasks.forEach(function(taskSpec) {
+            var t = new Task(taskSpec);
+            var v = new TaskView({ model: t });
+            v.on('changeStatus', resizeFn);
+            app.$('#taskContainer')[0].appendChild(v.el);
+        });
+        Task.startLoop();
     },
 
     // Position the window in the top right of the screen on startup.
