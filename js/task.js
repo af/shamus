@@ -16,12 +16,11 @@ var PARSERS = {
     tap: function(childProcess, task) {
         var tub = require('tub');
         childProcess.stdout.pipe(tub(function(x) {
-            console.log(require('util').inspect(x, { depth: null }));
             if (x.ok) task.success();
             else {
                 var output = x.summary;
                 x.failed.forEach(function(f) { output += ('\n\n' + f.info); });
-                task.error(output);     // TODO: format error output
+                task.error({ msg: output });
             }
         }));
     },
@@ -38,9 +37,13 @@ var PARSERS = {
             // Need the timeout to make sure we capture all stderr/stdout output.
             // Often the exit event comes before the last data is returned.
             setTimeout(function() {
-                var errorOutput = (bufferedStderr || bufferedStdout || '').trim();
-                if (code === 0) task.success();
-                else task.error(errorOutput);
+                if (code === 0) return task.success();
+
+                task.error({
+                    code: code,
+                    outputType: bufferedStderr ? 'stderr' : 'stdout',
+                    msg: (bufferedStderr || bufferedStdout || '').trim()
+                });
             }, 100);
         });
     }
@@ -84,10 +87,10 @@ module.exports = Backbone.Model.extend({
         this.isRunning = false;
     },
 
-    error: function(msg) {
+    error: function(errObj) {
         this.isOK = false;
         this.isRunning = false;
-        this.trigger('error', this, msg);
+        this.trigger('error', this, errObj);
     },
 
     run: function() {

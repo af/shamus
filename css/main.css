@@ -94,6 +94,9 @@ body {
   color: #a33;
   overflow: auto;
 }
+.errorMsg:not(:empty) b {
+  display: block;
+}
 @-webkit-keyframes rotate {
   0% {
     -webkit-transform: rotate(0deg);

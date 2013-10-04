@@ -6,6 +6,10 @@ module.exports = Backbone.View.extend({
     template: _.template(
         '<div class="status"> <div></div> </div> <div><h1><%= name %></h1></div> <div class="errorMsg"></div>'
     ),
+    errorTemplate: _.template(
+        '<% if (code) { %> <b>Return Code: <%= code %></b> <% } %>' +
+        '<% if (outputType) { %> <b><%= outputType %>:</b><% } %><%= msg %>'
+    ),
 
     initialize: function() {
         this.render();
@@ -16,9 +20,10 @@ module.exports = Backbone.View.extend({
         this.listenTo(this.model, 'error', this.showError.bind(this));
     },
 
-    showError: function(task, message) {
+    showError: function(task, errObj) {
         this.$el.addClass('hasError');
-        this.$error.html(message);
+        this.$error.html(errObj.msg);
+        this.$error.html(this.errorTemplate(errObj));
     },
 
     updateStatus: function(task) {
