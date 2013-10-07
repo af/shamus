@@ -33,7 +33,7 @@ var PARSERS = {
         childProcess.stderr.on('data', function(d) { bufferedStderr += d; });
         childProcess.stdout.on('data', function(d) { bufferedStdout += d; });
 
-        childProcess.on('exit', function(code, signal) {
+        childProcess.on('exit', function(code) {
             // Need the timeout to make sure we capture all stderr/stdout output.
             // Often the exit event comes before the last data is returned.
             setTimeout(function() {
@@ -68,9 +68,7 @@ module.exports = Backbone.Model.extend({
 
         fileBus.on('change', function(filename) {
             var isMatch = (watchRegex.test(filename));
-            if (watchRegex.test(filename)) {
-                task.run();
-            }
+            if (isMatch) task.run();
         });
     },
 
