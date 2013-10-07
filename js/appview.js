@@ -10,19 +10,31 @@ var TaskView = require('./taskview');
 module.exports = Backbone.View.extend({
     menubarHeight: 22,     // Accurate on OS X 10.8, probably needs to be adjusted for platform
 
-    initWindow: function(window) {
+    configure: function(config) {
+        this.config = config || {};
+        this.config.window = this.config.window || {};
+    },
+
+    initWindow: function(window, nwWindow) {
+        var windowConfig = this.config.window;
+        var app = this;
         this.window = window;
         this.screen = window.screen;
 
-        this.moveWindow();
+        // Setup our node-webkit window
+        // See https://github.com/rogerwang/node-webkit/wiki/Window
+        nwWindow.title = this.config.name || 'Sentinel';
+        nwWindow.setAlwaysOnTop(windowConfig.alwaysOnTop || false);
+
         this.resizeWindow();
+        setTimeout(function() { app.moveWindow(windowConfig); }, 10);   // Give time for webkit to resize the window first
     },
 
     // Set up Task instances from an array of task specs
     initTasks: function(taskList) {
         var app = this;
         var resizeFn = app.resizeWindow.bind(app);
-        taskList.tasks.forEach(function(taskSpec) {
+        taskList.forEach(function(taskSpec) {
             var t = new Task(taskSpec);
             var v = new TaskView({ model: t });
             v.on('changeStatus', resizeFn);
@@ -32,9 +44,14 @@ module.exports = Backbone.View.extend({
     },
 
     // Position the window in the top right of the screen on startup.
-    // TODO: make window position a config option and pass it in
-    moveWindow: function() {
-        this.window.moveTo(this.screen.width - this.window.outerWidth, 0);
+    // Takes a config object with the supported keys: 'top', 'bottom', 'left', 'right'
+    moveWindow: function(windowConfig) {
+        var topEdge = windowConfig.top || 0;
+        var leftEdge = windowConfig.left || 0;
+
+        if (typeof windowConfig.right === 'number') leftEdge = this.screen.width - windowConfig.right - this.window.outerWidth;
+        if (typeof windowConfig.bottom === 'number') topEdge = this.screen.height - windowConfig.bottom - this.window.outerHeight;
+        this.window.moveTo(leftEdge, topEdge);
     },
 
     // Resize window so it takes exactly the same height as the list of tasks:

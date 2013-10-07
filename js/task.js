@@ -33,7 +33,7 @@ var PARSERS = {
         childProcess.stderr.on('data', function(d) { bufferedStderr += d; });
         childProcess.stdout.on('data', function(d) { bufferedStdout += d; });
 
-        childProcess.on('exit', function(code) {
+        childProcess.on('exit', function(code, signal) {
             // Need the timeout to make sure we capture all stderr/stdout output.
             // Often the exit event comes before the last data is returned.
             setTimeout(function() {

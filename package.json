@@ -2,7 +2,6 @@
   "name": "Sentinel",
   "main": "index.html",
   "window": {
-    "always-on-top": true,
     "toolbar": false,
     "frame": true,
     "width": 400,
