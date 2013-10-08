@@ -16,8 +16,9 @@ module.exports = Backbone.View.extend({
     },
 
     initWindow: function(window, nwWindow) {
-        var windowConfig = this.config.window;
         var app = this;
+        var windowConfig = this.config.window;
+        windowConfig.width = windowConfig.width || 400;     // Default width if none is specified
         this.window = window;
         this.screen = window.screen;
 
