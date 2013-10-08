@@ -4,11 +4,7 @@
   "window": {
     "toolbar": false,
     "frame": true,
-    "width": 400,
-    "height": 300,
-    "position": "mouse",
-    "min_width": 400,
-    "min_height": 100
+    "show": false
   },
   "dependencies": {
     "backbone": "1.0",

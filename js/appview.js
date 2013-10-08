@@ -26,8 +26,12 @@ module.exports = Backbone.View.extend({
         nwWindow.title = this.config.name || 'Sentinel';
         nwWindow.setAlwaysOnTop(windowConfig.alwaysOnTop || false);
 
-        this.resizeWindow();
-        setTimeout(function() { app.moveWindow(windowConfig); }, 10);   // Give time for webkit to resize the window first
+        this.resizeWindow(windowConfig);
+        setTimeout(function() {
+            app.moveWindow(windowConfig);
+            nwWindow.show();
+            //nwWindow.showDevTools();      // Handy for debugging
+        }, 10);   // Give time for webkit to resize the window before moving and showing it
     },
 
     // Set up Task instances from an array of task specs
@@ -55,15 +59,17 @@ module.exports = Backbone.View.extend({
     },
 
     // Resize window so it takes exactly the same height as the list of tasks:
-    resizeWindow: function() {
+    resizeWindow: function(windowConfig) {
+        windowConfig = windowConfig || {};
         var view = this;
         var w = this.window;
 
         // Give webkit a little time to re-render the resized elements before we detect the
         // height to change the window to:
         setTimeout(function() {
+            var width = windowConfig.width || w.outerWidth;
             var height = w.getComputedStyle(view.el).height;
-            w.resizeTo(w.outerWidth, parseFloat(height) + view.menubarHeight);
+            w.resizeTo(width, parseFloat(height) + view.menubarHeight);
         }, 10);
     }
 });
