@@ -67,7 +67,7 @@ body {
   content: '√';
 }
 .status.error {
-  background: #f00;
+  background: #c33;
 }
 .status.error div {
   -webkit-animation: pulse 0.5s;
@@ -91,7 +91,7 @@ body {
   white-space: pre;
   font-family: monospace;
   font-size: 0.8rem;
-  color: #a33;
+  color: #c33;
   overflow: auto;
 }
 .errorMsg:not(:empty) b {

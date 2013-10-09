@@ -1,5 +1,6 @@
 $statusWidth = 40px
 $paddingWidth = 0.5rem
+$errorColour = #cc3333
 
 clearfix()
     &:before, &:after
@@ -70,7 +71,7 @@ html, body
             content: '√'
 
     &.error
-        background: red
+        background: $errorColour
 
         div
             -webkit-animation: pulse 0.5s
@@ -94,7 +95,7 @@ html, body
     white-space: pre
     font-family: monospace
     font-size: 0.8rem
-    color: #aa3333
+    color: $errorColour
     overflow: auto
 
     b
