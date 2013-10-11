@@ -10,6 +10,10 @@ var TaskView = require('./taskview');
 module.exports = Backbone.View.extend({
     menubarHeight: 22,     // Accurate on OS X 10.8, probably needs to be adjusted for platform
 
+    events: {
+        'keyup': 'keypressDispatch'
+    },
+
     configure: function(config) {
         this.config = config || {};
         this.config.window = this.config.window || {};
@@ -21,6 +25,7 @@ module.exports = Backbone.View.extend({
         windowConfig.width = windowConfig.width || 400;     // Default width if none is specified
         this.window = window;
         this.screen = window.screen;
+        this.nwWindow = nwWindow;
 
         // Setup our node-webkit window
         // See https://github.com/rogerwang/node-webkit/wiki/Window
@@ -31,7 +36,6 @@ module.exports = Backbone.View.extend({
         setTimeout(function() {
             app.moveWindow(windowConfig);
             nwWindow.show();
-            //nwWindow.showDevTools();      // Handy for debugging
         }, 10);   // Give time for webkit to resize the window before moving and showing it
     },
 
@@ -72,5 +76,11 @@ module.exports = Backbone.View.extend({
             var height = w.getComputedStyle(view.el).height;
             w.resizeTo(width, parseFloat(height) + view.menubarHeight);
         }, 10);
+    },
+
+    // Handle keypresses app-wide
+    keypressDispatch: function(evt) {
+        // Hitting Ctrl-d opens the devtools:
+        if (evt.keyCode === 68 && evt.ctrlKey) this.nwWindow.showDevTools();
     }
 });
