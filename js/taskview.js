@@ -7,8 +7,8 @@ module.exports = Backbone.View.extend({
         '<div class="status"> <div></div> </div> <div><h1><%= name %></h1></div> <div class="errorMsg"></div>'
     ),
     errorTemplate: _.template(
-        '<% if (code) { %> <b>Return Code: <%= code %></b> <% } %>' +
-        '<% if (outputType) { %> <b><%= outputType %>:</b><% } %><%= msg %>'
+        '<% if (err.code) { %> <b>Return Code: <%= err.code %></b> <% } %>' +
+        '<% if (err.outputType) { %> <b><%= err.outputType %>:</b><% } %><%= err.msg %>'
     ),
 
     initialize: function() {
@@ -23,7 +23,7 @@ module.exports = Backbone.View.extend({
     showError: function(task, errObj) {
         this.$el.addClass('hasError');
         this.$error.html(errObj.msg);
-        this.$error.html(this.errorTemplate(errObj));
+        this.$error.html(this.errorTemplate({ err: errObj }));
     },
 
     updateStatus: function(task) {
