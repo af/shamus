@@ -7,8 +7,11 @@ module.exports = Backbone.View.extend({
         '<div class="status"> <div></div> </div> <div><h1><%= name %></h1></div> <div class="errorMsg"></div>'
     ),
     errorTemplate: _.template(
-        '<% if (err.code) { %> <b>Return Code: <%= err.code %></b> <% } %>' +
-        '<% if (err.outputType) { %> <b><%= err.outputType %>:</b><% } %><%= err.msg %>'
+        '<div class="metadata">' +
+            '<% if (err.outputType) { %> <b class="outputType"><%= err.outputType %></b><% } %>' +
+            '<% if (err.code) { %> <b class="returnCode">return code: <%= err.code %></b> <% } %>' +
+        '</div>' +
+        '<%= err.msg %>'
     ),
 
     initialize: function() {

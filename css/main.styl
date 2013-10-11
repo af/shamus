@@ -98,8 +98,23 @@ html, body
     color: $errorColour
     overflow: auto
 
-    b
-        display: block
+    .metadata
+        position: absolute
+        right: 0
+        top: 0
+        padding: $paddingWidth
+        opacity: 0.1
+        color: #555
+        pointer-events: none
+        line-height: 0.8
+
+        b
+            display: block
+
+            &.outputType
+                font-size: 2em
+            &.returnCode
+                font-size: 1.5em
 
 @-webkit-keyframes rotate
     0%

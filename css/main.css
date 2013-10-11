@@ -94,8 +94,24 @@ body {
   color: #c33;
   overflow: auto;
 }
-.errorMsg:not(:empty) b {
+.errorMsg:not(:empty) .metadata {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 0.5rem;
+  opacity: 0.1;
+  color: #555;
+  pointer-events: none;
+  line-height: 0.8;
+}
+.errorMsg:not(:empty) .metadata b {
   display: block;
+}
+.errorMsg:not(:empty) .metadata b.outputType {
+  font-size: 2em;
+}
+.errorMsg:not(:empty) .metadata b.returnCode {
+  font-size: 1.5em;
 }
 @-webkit-keyframes rotate {
   0% {
