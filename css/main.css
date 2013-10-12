@@ -1,5 +1,12 @@
-* {
-  box-sizing: border-box;
+@font-face {
+  font-family: 'Open Sans2';
+  font-weight: 300;
+  src: url("OpenSans-Light.ttf") format('truetype');
+}
+@font-face {
+  font-family: 'Open Sans2';
+  font-weight: normal;
+  src: url("OpenSans-Regular.ttf") format('truetype');
 }
 @font-face {
   font-family: 'icons';
@@ -7,12 +14,15 @@
   font-weight: normal;
   font-style: normal;
 }
+* {
+  box-sizing: border-box;
+}
 html,
 body {
   margin: 0;
   padding: 0;
   background: linear-gradient(#ddd, #ccc);
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Open Sans2', sans-serif;
 }
 #taskContainer {
   padding: 0;

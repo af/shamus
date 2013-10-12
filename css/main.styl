@@ -2,6 +2,22 @@ $statusWidth = 40px
 $paddingWidth = 0.5rem
 $errorColour = #cc3333
 
+@font-face
+    font-family: 'Open Sans2'
+    font-weight: 300
+    src: url('OpenSans-Light.ttf') format('truetype')
+@font-face
+    font-family: 'Open Sans2'
+    font-weight: normal
+    src: url('OpenSans-Regular.ttf') format('truetype')
+
+@font-face
+    font-family: 'icons'
+    src: url('icons.woff') format('woff')
+    font-weight: normal
+    font-style: normal
+
+
 clearfix()
     &:before, &:after
         content: " "
@@ -13,17 +29,11 @@ clearfix()
 *
     box-sizing: border-box
 
-@font-face
-    font-family: 'icons'
-    src: url('icons.woff') format('woff')
-    font-weight: normal
-    font-style: normal
-
 html, body
     margin: 0
     padding: 0
     background: linear-gradient(#ddd, #ccc)
-    font-family: 'Open Sans', sans-serif
+    font-family: 'Open Sans2', sans-serif
 
 #taskContainer
     padding: 0
