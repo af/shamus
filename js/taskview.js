@@ -6,7 +6,7 @@ module.exports = Backbone.View.extend({
     template: swig.compile(
         '<div class="status"> <div></div> </div>' +
         '<div>' +
-            '<h1>{{ name }}></h1></div>' +
+            '<h1>{{ name }}</h1></div>' +
             '<div class="errorMsg">' +
         '</div>'
     ),
