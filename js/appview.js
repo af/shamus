@@ -82,5 +82,8 @@ module.exports = Backbone.View.extend({
     keypressDispatch: function(evt) {
         // Hitting Ctrl-d opens the devtools:
         if (evt.keyCode === 68 && evt.ctrlKey) this.nwWindow.showDevTools();
+        // Hitting Ctrl-r refreshes the page/window:
+        // FIXME: this inits an additional recursive file watcher; should clean up the old one
+        if (evt.keyCode === 82 && evt.ctrlKey) this.window.location.reload();
     }
 });
