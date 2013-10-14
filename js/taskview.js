@@ -1,17 +1,21 @@
 var Backbone = require('backbone');
-var _ = require('underscore');
+var swig = require('swig');
 
 module.exports = Backbone.View.extend({
     tagName: 'li',
-    template: _.template(
-        '<div class="status"> <div></div> </div> <div><h1><%= name %></h1></div> <div class="errorMsg"></div>'
+    template: swig.compile(
+        '<div class="status"> <div></div> </div>' +
+        '<div>' +
+            '<h1>{{ name }}></h1></div>' +
+            '<div class="errorMsg">' +
+        '</div>'
     ),
-    errorTemplate: _.template(
+    errorTemplate: swig.compile(
         '<div class="metadata">' +
-            '<% if (err.outputType) { %> <b class="outputType"><%= err.outputType %></b><% } %>' +
-            '<% if (err.code) { %> <b class="returnCode">return code: <%= err.code %></b> <% } %>' +
+            '{% if err.outputType %} <b class="outputType">{{ err.outputType }}</b>{% endif %}' +
+            '{% if err.code %} <b class="returnCode">return code: {{ err.code }}</b> {% endif %}' +
         '</div>' +
-        '<%= err.msg %>'
+        '{{ err.msg }}'
     ),
 
     initialize: function() {
