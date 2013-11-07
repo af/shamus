@@ -4,7 +4,7 @@ var watch = require('node-watch');
 var _ = require('underscore');
 var Backbone = require('backbone');
 var Backprop = require('backprop');
-Backprop.monkeypatch(Backbone);
+Backprop.extendModel(Backbone.Model);
 
 // TODO: the current single-fileBus system can only work when watching a
 // single directory. Should add an extra abstraction so that we can watch
@@ -49,7 +49,7 @@ var PARSERS = {
     }
 };
 
-module.exports = Backbone.Model.extend({
+module.exports = Backprop.Model.extend({
     name: Backprop.String({ default: 'Unnamed task' }),
     command: Backprop.String(),
     watchMatcher: Backprop.String(),

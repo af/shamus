@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "backbone": "1.0",
-    "backprop": "0.3.0",
+    "backprop": "0.4.0",
     "littledom": "af/littledom",
     "node-watch": "0.3.4",
     "swig": "1.1.0",
