@@ -20,7 +20,10 @@ var PARSERS = {
             else {
                 var output = x.summary;
                 x.failed.forEach(function(f) { output += ('\n\n' + f.info); });
-                task.error({ msg: output });
+                task.error({
+                    msg: output,
+                    outputType: 'tap'
+                });
             }
         }));
     },
