@@ -7,6 +7,7 @@ var Backbone = require('backbone');
 var $ = require('littledom');
 Backbone.$ = $;
 
+console.log(process.cwd());
 var taskFile = process.argv[2] || '.sentinel.json';
 var config = JSON.parse(require('fs').readFileSync(taskFile, 'utf8'));
 
