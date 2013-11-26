@@ -36,7 +36,7 @@ module.exports = Backbone.View.extend({
         setTimeout(function() {
             app.moveWindow(windowConfig);
             nwWindow.show();
-        }, 10);   // Give time for webkit to resize the window before moving and showing it
+        }, 50);   // Give time for webkit to resize the window before moving and showing it
     },
 
     // Set up Task instances from an array of task specs

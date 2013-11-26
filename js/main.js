@@ -14,4 +14,10 @@ var AppView = require('./js/appview');
 var app = new AppView({ el: document.body });
 app.configure(config);      // TODO: add config parser abstraction that also supports ~/.sentinel.json
 app.initWindow(window, gui.Window.get());
-app.initTasks(config.tasks);
+
+// FIXME: find a way to remove this timeout before initializing models.
+// It's here to prevent the "X assertions not reported" error that we get
+// from tub/mocha when running the sentinel tests on app startup.
+setTimeout(function() {
+    app.initTasks(config.tasks);
+}, 500);
