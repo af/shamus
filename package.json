@@ -15,7 +15,7 @@
     "littledom": "af/littledom",
     "node-watch": "0.3.4",
     "swig": "1.1.0",
-    "nodewebkit": "0.8.1",
+    "nodewebkit": "0.8.2",
     "tub": "*",
     "underscore": "~1.5.1"
   }
