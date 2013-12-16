@@ -7,7 +7,7 @@
     "show": false
   },
   "scripts": {
-    "start": "nodewebkit ~/code/node/sentinel"
+    "start": "nodewebkit"
   },
   "dependencies": {
     "backbone": "1.0",
