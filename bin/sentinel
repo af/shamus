@@ -1,0 +1,11 @@
+#!/usr/bin/env node
+
+console.log('Starting sentinel.app...');
+
+// TODO: pass process.cwd() as an arg to the node-webkit app (so it can look for .sentinel.json)
+var cp = require('child_process');
+var path = require('path');
+
+var child = cp.exec('npm start', { cwd: path.resolve(__dirname, '..') });
+child.unref();  // 'detaches' the child process
+process.exit();

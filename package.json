@@ -6,6 +6,9 @@
     "frame": true,
     "show": false
   },
+  "bin": {
+    "sentinel": "./bin/sentinel"
+  },
   "scripts": {
     "start": "nodewebkit"
   },
