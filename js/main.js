@@ -1,14 +1,17 @@
 // To build & run:
 // zip -r app.nw index.html css js package.json; ./node-webkit.app/Contents/MacOS/node-webkit app.nw
 
+var path = require('path');
 var gui = require('nw.gui');
-
 var Backbone = require('backbone');
-var $ = require('littledom');
-Backbone.$ = $;
+Backbone.$ = require('littledom');
 
-console.log(process.cwd());
-var taskFile = process.argv[2] || '.sentinel.json';
+// Load a json config file from the project directory (where the app was started from):
+// FIXME: tasks/watchers run from this code's root dir, not the project's
+// TODO: if no json config found in this dir, search parent dirs until finding one
+var appDir = path.dirname(location.pathname);   // the dir where this code is located
+var projectDir = gui.App.argv[0] || appDir;     // the dir from which the app was launched
+var taskFile = path.join(projectDir, '.sentinel.json');
 var config = JSON.parse(require('fs').readFileSync(taskFile, 'utf8'));
 
 var AppView = require('./js/appview');

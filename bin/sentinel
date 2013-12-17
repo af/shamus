@@ -1,11 +1,14 @@
 #!/usr/bin/env node
 
-console.log('Starting sentinel.app...');
-
-// TODO: pass process.cwd() as an arg to the node-webkit app (so it can look for .sentinel.json)
 var cp = require('child_process');
 var path = require('path');
 
-var child = cp.exec('npm start', { cwd: path.resolve(__dirname, '..') });
+// Pass process.cwd() as an arg to the node-webkit app (so it can look for .sentinel.json)
+// Would love to use "npm start" instead for this, but currently can't pass extra args to it.
+// See https://github.com/isaacs/npm/issues/3494
+var cmd = './node_modules/nodewebkit/bin/nodewebkit . ' + process.cwd();
+
+console.log('Starting sentinel.app...');
+var child = cp.exec(cmd, { cwd: path.resolve(__dirname, '..') });
 child.unref();  // 'detaches' the child process
 process.exit();
