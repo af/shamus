@@ -22,9 +22,9 @@ Example Uses
 Installing and Running the app
 ------------------------------
 
-#. Install the app with `npm install -g shamus`
+1. Install the app with `npm install -g shamus`
 
-#. Create a `.shamus.json` file in the root directory of the project you want
+1. Create a `.shamus.json` file in the root directory of the project you want
    to work on. Here's an example file that will run jshint (assuming you have it
    installed) every time a javascript file changes:
 
@@ -41,7 +41,7 @@ Installing and Running the app
    }
    ```
 
-#. Still in your project's root directory, enter `shamus` from the terminal.
+1. Still in your project's root directory, enter `shamus` from the terminal.
    Shamus should start and report jshint's results.
 
 
