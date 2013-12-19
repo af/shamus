@@ -30,7 +30,7 @@ module.exports = Backbone.View.extend({
 
         // Setup our node-webkit window
         // See https://github.com/rogerwang/node-webkit/wiki/Window
-        nwWindow.title = this.config.name || 'Sentinel';
+        nwWindow.title = this.config.name || 'Shamus';
         nwWindow.setAlwaysOnTop(windowConfig.alwaysOnTop || false);
 
         this.resizeWindow(windowConfig);

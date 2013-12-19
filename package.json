@@ -1,5 +1,5 @@
 {
-  "name": "Sentinel",
+  "name": "shamus",
   "main": "index.html",
   "window": {
     "toolbar": false,
@@ -7,7 +7,7 @@
     "show": false
   },
   "bin": {
-    "sentinel": "./bin/sentinel"
+    "shamus": "./bin/shamus"
   },
   "scripts": {
     "start": "nodewebkit"

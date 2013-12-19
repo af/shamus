@@ -1,4 +1,4 @@
-Sentinel
+Shamus
 ========
 
 A desktop application that watches a directory and runs tasks when
@@ -22,9 +22,9 @@ Example Uses
 Installing and Running the app
 ------------------------------
 
-#. Install the app with `npm install -g sentinelapp`
+#. Install the app with `npm install -g shamus`
 
-#. Create a `.sentinel.json` file in the root directory of the project you want
+#. Create a `.shamus.json` file in the root directory of the project you want
    to work on. Here's an example file that will run jshint (assuming you have it
    installed) every time a javascript file changes:
 
@@ -41,8 +41,8 @@ Installing and Running the app
    }
    ```
 
-#. Still in your project's root directory, enter `sentinel` from the terminal.
-   Sentinel should start and report jshint's results.
+#. Still in your project's root directory, enter `shamus` from the terminal.
+   Shamus should start and report jshint's results.
 
 
 License
