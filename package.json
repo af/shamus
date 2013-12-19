@@ -1,10 +1,8 @@
 {
   "name": "shamus",
-  "main": "index.html",
-  "window": {
-    "toolbar": false,
-    "frame": true,
-    "show": false
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/af/shamus.git"
   },
   "bin": {
     "shamus": "./bin/shamus"
@@ -19,7 +17,14 @@
     "node-watch": "0.3.4",
     "swig": "1.1.0",
     "nodewebkit": "0.8.2",
-    "tub": "*",
+    "tub": "0.2.0",
     "underscore": "~1.5.1"
+  },
+
+  "main": "index.html",
+  "window": {
+    "toolbar": false,
+    "frame": true,
+    "show": false
   }
 }
