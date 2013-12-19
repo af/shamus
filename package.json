@@ -20,11 +20,11 @@
     "tub": "0.2.0",
     "underscore": "~1.5.1"
   },
-
   "main": "index.html",
   "window": {
     "toolbar": false,
     "frame": true,
     "show": false
-  }
+  },
+  "version": "0.0.1"
 }
