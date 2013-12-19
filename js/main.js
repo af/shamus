@@ -13,6 +13,7 @@ var appDir = path.dirname(location.pathname);   // the dir where this code is lo
 var projectDir = gui.App.argv[0] || appDir;     // the dir from which the app was launched
 var taskFile = path.join(projectDir, '.sentinel.json');
 var config = JSON.parse(require('fs').readFileSync(taskFile, 'utf8'));
+config.projectDir = projectDir
 
 var AppView = require('./js/appview');
 var app = new AppView({ el: document.body });

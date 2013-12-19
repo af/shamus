@@ -16,6 +16,7 @@ module.exports = Backbone.View.extend({
 
     configure: function(config) {
         this.config = config || {};
+        this.config.projectDir = config.projectDir;
         this.config.window = this.config.window || {};
     },
 
@@ -44,12 +45,13 @@ module.exports = Backbone.View.extend({
         var app = this;
         var resizeFn = app.resizeWindow.bind(app);
         taskList.forEach(function(taskSpec) {
+            taskSpec.rootDir = app.config.projectDir;
             var t = new Task(taskSpec);
             var v = new TaskView({ model: t });
             v.on('changeStatus', resizeFn);
             app.$('#taskContainer')[0].appendChild(v.el);
         });
-        Task.startLoop();
+        Task.startLoop(this.config.projectDir);
     },
 
     // Position the window in the top right of the screen on startup.

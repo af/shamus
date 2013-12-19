@@ -56,6 +56,7 @@ module.exports = Backprop.Model.extend({
     name: Backprop.String({ default: 'Unnamed task' }),
     command: Backprop.String(),
     watchMatcher: Backprop.String(),
+    rootDir: Backprop.String(),
     isRunning: Backprop.Boolean({ default: false }),
     isActive: Backprop.Boolean({ default: true }),
     isOK: Backprop.Boolean(),
@@ -99,7 +100,7 @@ module.exports = Backprop.Model.extend({
         task.isRunning = true;
         // TODO: throttling & not running multiple times simultaneously
         var splitCmd = this.parseCommand(this.command);
-        var childProcess = spawn(splitCmd.cmd, splitCmd.args);
+        var childProcess = spawn(splitCmd.cmd, splitCmd.args, { cwd: this.rootDir });
 
         var parser = PARSERS[this.parser];
         parser(childProcess, task);
@@ -108,8 +109,8 @@ module.exports = Backprop.Model.extend({
 
     // Static method to run a single recursive watch() over the root directory.
     // If we run one watch() per task, only the first one works for some reason.
-    startLoop: function() {
-        watch('.', function(filename) {
+    startLoop: function(rootDir) {
+        watch(rootDir, function(filename) {
             fileBus.trigger('change', filename);
         });
     }
