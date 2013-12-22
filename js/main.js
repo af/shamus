@@ -1,23 +1,24 @@
-// To build & run:
-// zip -r app.nw index.html css js package.json; ./node-webkit.app/Contents/MacOS/node-webkit app.nw
+// Main entrypoint for shamus app
 
 var path = require('path');
 var gui = require('nw.gui');
 var Backbone = require('backbone');
 Backbone.$ = require('littledom');
 
-// Load a json config file from the project directory (where the app was started from):
-// FIXME: tasks/watchers run from this code's root dir, not the project's
-// TODO: if no json config found in this dir, search parent dirs until finding one
-var appDir = path.dirname(location.pathname);   // the dir where this code is located
-var projectDir = gui.App.argv[0] || appDir;     // the dir from which the app was launched
+// Load a json config file from the project directory
+// (ie. where the app was started from):
+//
+// TODO: add config parser abstraction that supports searching parent dirs
+// recursively until finding a json config file, and/or using ~/.shamus.json
+var appDir = path.dirname(location.pathname);   // dir where shamus code is located
+var projectDir = gui.App.argv[0] || appDir;     // dir where the app was launched
 var taskFile = path.join(projectDir, '.shamus.json');
 var config = JSON.parse(require('fs').readFileSync(taskFile, 'utf8'));
-config.projectDir = projectDir
+config.projectDir = projectDir;
 
 var AppView = require('./js/appview');
 var app = new AppView({ el: document.body });
-app.configure(config);      // TODO: add config parser abstraction that also supports ~/.shamus.json
+app.configure(config);
 app.initWindow(window, gui.Window.get());
 
 // FIXME: find a way to remove this timeout before initializing models.
