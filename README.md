@@ -26,14 +26,14 @@ Installing and Running the app
 
 1. Create a `.shamus.json` file in the root directory of the project you want
    to work on. Here's an example file that will run jshint (assuming you have it
-   installed) every time a javascript file changes:
+   installed) every time a javascript file in your root dir changes.
 
    ```
    {
     "tasks": [
         {
             "name": "JSHint",
-            "command": "jshint js",
+            "command": "jshint .",
             "parser": "exitcode",
             "watchMatcher": "\\.js$"
         }
