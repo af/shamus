@@ -6,19 +6,19 @@
     },
     "tasks": [
         {
-            "name": "Mocha tests (shamus)",
+            "name": "Mocha tests",
             "command": "mocha tests -R tap",
             "parser": "tap",
             "watchMatcher": "\\.js$"
         },
         {
-            "name": "Stylus (shamus)",
+            "name": "Stylus",
             "command": "stylus css",
             "parser": "exitcode",
             "watchMatcher": "\\.styl$"
         },
         {
-            "name": "JSHint (Shamus)",
+            "name": "JSHint",
             "command": "jshint js",
             "parser": "exitcode",
             "watchMatcher": "\\.js$"
