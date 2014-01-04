@@ -35,7 +35,7 @@ Installing and Running the app
             "name": "JSHint",
             "command": "jshint .",
             "parser": "exitcode",
-            "watchMatcher": "\\.js$"
+            "fileMatcher": ".js$"
         }
     ]
    }

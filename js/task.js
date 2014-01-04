@@ -55,7 +55,7 @@ var PARSERS = {
 module.exports = Backprop.Model.extend({
     name: Backprop.String({ default: 'Unnamed task' }),
     command: Backprop.String(),
-    watchMatcher: Backprop.String(),
+    fileMatcher: Backprop.String(),
     rootDir: Backprop.String(),
     isRunning: Backprop.Boolean({ default: false }),
     isActive: Backprop.Boolean({ default: true }),
@@ -64,7 +64,7 @@ module.exports = Backprop.Model.extend({
 
     initialize: function() {
         var task = this;
-        var watchRegex = new RegExp(task.watchMatcher);
+        var watchRegex = new RegExp(task.fileMatcher);
 
         // Not sure why timeout is needed here, but we get errors from
         // Mocha when it's not present...

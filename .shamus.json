@@ -9,19 +9,19 @@
             "name": "Mocha tests",
             "command": "mocha tests -R tap",
             "parser": "tap",
-            "watchMatcher": "\\.js$"
+            "fileMatcher": "\\.js$"
         },
         {
             "name": "Stylus",
             "command": "stylus css",
             "parser": "exitcode",
-            "watchMatcher": "\\.styl$"
+            "fileMatcher": "\\.styl$"
         },
         {
             "name": "JSHint",
             "command": "jshint js",
             "parser": "exitcode",
-            "watchMatcher": "\\.js$"
+            "fileMatcher": "\\.js$"
         }
     ]
 }
