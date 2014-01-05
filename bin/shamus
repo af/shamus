@@ -8,7 +8,7 @@ var path = require('path');
 // See https://github.com/isaacs/npm/issues/3494
 var cmd = './node_modules/nodewebkit/bin/nodewebkit . ' + process.cwd();
 
-console.log('Starting shamus app...');
+console.log('Starting shamus from', process.cwd(), '...');
 var child = cp.exec(cmd, { cwd: path.resolve(__dirname, '..') });
 child.unref();  // 'detaches' the child process
 process.exit();
