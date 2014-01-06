@@ -1,14 +1,47 @@
 #!/usr/bin/env node
 
+// Shamus app launcher script
+//
+// Usage:
+//  shamus          # Launch the app from the current directory
+//  shamus init     # Try to create a .shamus.json file in the current dir
+//  shamus foo      # Launch the app from ./foo
+
 var cp = require('child_process');
+var fs = require('fs');
 var path = require('path');
 
-// Pass process.cwd() as an arg to the node-webkit app (so it can look for .shamus.json)
+var CONFIG_FILENAME= '.shamus.json';
+var launchDir = process.cwd();
+
+// Create a new .shamus.json file in the current directory if it doesn't already exist.
+function initDirectory(rootDir) {
+    var configPath = path.join(rootDir, CONFIG_FILENAME);
+    if (fs.existsSync(configPath)) {
+        console.log(configPath, 'already exists');
+    } else {
+        var defaultConfig = fs.readFileSync(path.resolve(__dirname, '..', 'default_config.json'));
+        fs.writeFileSync(configPath, defaultConfig);
+        console.log('Created new shamus config file at', configPath);
+    }
+    process.exit();
+}
+
+// Check for an extra arg passed in the command (eg. "shamus foo")
+// If it's "init" then try to create a new .shamus.json file
+var arg = process.argv[2];
+if (arg === 'init') initDirectory(process.cwd());
+else if (arg) {
+    // Treat the arg as a relative path to launch the app from:
+    launchDir = path.join(process.cwd(), arg);
+}
+
+// Pass the current dir as an arg to the node-webkit app (so it can look for .shamus.json)
 // Would love to use "npm start" instead for this, but currently can't pass extra args to it.
 // See https://github.com/isaacs/npm/issues/3494
-var cmd = './node_modules/nodewebkit/bin/nodewebkit . ' + process.cwd();
+var cmd = './node_modules/nodewebkit/bin/nodewebkit . ' + launchDir;
 
-console.log('Starting shamus from', process.cwd(), '...');
+console.log('Starting shamus from', launchDir, '...');
 var child = cp.exec(cmd, { cwd: path.resolve(__dirname, '..') });
-child.unref();  // 'detaches' the child process
+child.unref();  // 'detaches' the child process so it doesn't hold up the shell
 process.exit();

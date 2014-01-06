@@ -1,0 +1,11 @@
+{
+    "tasks": [
+        {
+            "name": "JSHint",
+            "command": "jshint",
+            "parser": "exitcode",
+            "fileMatcher": "\\.js$"
+        }
+    ]
+}
+
