@@ -78,6 +78,15 @@ your task process and report a success or failure to the app:
             output and reports success if there are 0 failures.
 
 
+Screenshots
+-----------
+
+Examples of the app running on its own codebase:
+
+![Success](https://raw.github.com/af/shamus/master/docs/images/screenshot_success.png)
+![Failure](https://raw.github.com/af/shamus/master/docs/images/screenshot_error.png)
+
+
 License
 -------
 MIT
