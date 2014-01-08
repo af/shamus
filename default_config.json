@@ -1,4 +1,10 @@
 {
+    "window": {
+        "alwaysOnTop": true,
+        "top": 0,
+        "right": 0
+    },
+
     "tasks": [
         {
             "name": "JSHint",
