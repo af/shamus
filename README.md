@@ -41,7 +41,7 @@ Installing and Running the app
       "tasks": [
           {
               "name": "JSHint",
-              "command": "jshint",
+              "command": "jshint .",
               "parser": "exitcode",
               "fileMatcher": "\\.js$"
           }
