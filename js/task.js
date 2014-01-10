@@ -14,18 +14,20 @@ var fileBus = _.extend({}, Backbone.Events);
 // Rough attempt at pluggable parsers for the output of each task's process:
 var PARSERS = {
     tap: function(childProcess, task) {
-        var tub = require('tub');
-        childProcess.stdout.pipe(tub(function(x) {
+        var onFinish = function(x) {
             if (x.ok) task.success();
             else {
-                var output = x.summary;
-                x.failed.forEach(function(f) { output += ('\n\n' + f.info); });
+                var output = x.fail.length + ' tests failed';
+                x.fail.forEach(function(f) { output += ('\n\n* ' + f.name); });
                 task.error({
                     msg: output,
                     outputType: 'tap'
                 });
             }
-        }));
+        };
+
+        var parser = require('tap-parser')(onFinish);
+        childProcess.stdout.pipe(parser);
     },
 
     exitcode: function(childProcess, task) {
@@ -65,10 +67,6 @@ module.exports = Backprop.Model.extend({
     initialize: function() {
         var task = this;
         var watchRegex = new RegExp(task.fileMatcher);
-
-        // Not sure why timeout is needed here, but we get errors from
-        // Mocha when it's not present...
-        setTimeout(function() { task.run(); }, 300);
 
         fileBus.on('change', function(filename) {
             var isMatch = (watchRegex.test(filename));

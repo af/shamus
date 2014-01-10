@@ -20,10 +20,4 @@ var AppView = require('./js/appview');
 var app = new AppView({ el: document.body });
 app.configure(config);
 app.initWindow(window, gui.Window.get());
-
-// FIXME: find a way to remove this timeout before initializing models.
-// It's here to prevent the "X assertions not reported" error that we get
-// from tub/mocha when running the shamus tests on app startup.
-setTimeout(function() {
-    app.initTasks(config.tasks);
-}, 500);
+app.initTasks(config.tasks);

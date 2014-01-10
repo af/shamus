@@ -50,6 +50,7 @@ module.exports = Backbone.View.extend({
             var v = new TaskView({ model: t });
             v.on('changeStatus', resizeFn);
             app.$('#taskContainer')[0].appendChild(v.el);
+            t.run();
         });
         Task.startLoop(this.config.projectDir);
     },

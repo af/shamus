@@ -18,7 +18,7 @@
     "node-watch": "0.3.4",
     "swig": "1.1.0",
     "nodewebkit": "0.8.4",
-    "tub": "0.2.0",
+    "tap-parser": "0.4.1",
     "underscore": "1.5.1"
   },
   "main": "index.html",
