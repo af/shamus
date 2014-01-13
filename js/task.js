@@ -19,7 +19,6 @@ module.exports = Backprop.Model.extend({
     fileMatcher: Backprop.String(),
     rootDir: Backprop.String(),
     isRunning: Backprop.Boolean({ default: false }),
-    isActive: Backprop.Boolean({ default: true }),
     isOK: Backprop.Boolean(),
     parser: Backprop.String({ choices: Object.keys(parsers), 'default': 'exitcode' }),
 
