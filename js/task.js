@@ -4,6 +4,7 @@ var watch = require('node-watch');
 var _ = require('underscore');
 var Backbone = require('backbone');
 var Backprop = require('backprop');
+var parsers = require('./parsers');
 Backprop.extendModel(Backbone.Model);
 
 // TODO: the current single-fileBus system can only work when watching a
@@ -11,48 +12,6 @@ Backprop.extendModel(Backbone.Model);
 // multiple dirs at a time from different tasks.
 var fileBus = _.extend({}, Backbone.Events);
 
-// Rough attempt at pluggable parsers for the output of each task's process:
-var PARSERS = {
-    tap: function(childProcess, task) {
-        var onFinish = function(x) {
-            if (x.ok) task.success();
-            else {
-                var output = x.fail.length + ' tests failed';
-                x.fail.forEach(function(f) { output += ('\n\n* ' + f.name); });
-                task.error({
-                    msg: output,
-                    outputType: 'tap'
-                });
-            }
-        };
-
-        var parser = require('tap-parser')(onFinish);
-        childProcess.stdout.pipe(parser);
-    },
-
-    exitcode: function(childProcess, task) {
-        var bufferedStderr = '';
-        var bufferedStdout = '';
-
-        // Buffer both stderr and stdout:
-        childProcess.stderr.on('data', function(d) { bufferedStderr += d; });
-        childProcess.stdout.on('data', function(d) { bufferedStdout += d; });
-
-        childProcess.on('exit', function(code, signal) {
-            // Need the timeout to make sure we capture all stderr/stdout output.
-            // Often the exit event comes before the last data is returned.
-            setTimeout(function() {
-                if (code === 0) return task.success();
-
-                task.error({
-                    code: code,
-                    outputType: bufferedStderr ? 'stderr' : 'stdout',
-                    msg: (bufferedStderr || bufferedStdout || '').trim()
-                });
-            }, 100);
-        });
-    }
-};
 
 module.exports = Backprop.Model.extend({
     name: Backprop.String({ default: 'Unnamed task' }),
@@ -62,7 +21,7 @@ module.exports = Backprop.Model.extend({
     isRunning: Backprop.Boolean({ default: false }),
     isActive: Backprop.Boolean({ default: true }),
     isOK: Backprop.Boolean(),
-    parser: Backprop.String({ choices: ['tap', 'exitcode'], 'default': 'exitcode' }),
+    parser: Backprop.String({ choices: Object.keys(parsers), 'default': 'exitcode' }),
 
     initialize: function() {
         var task = this;
@@ -100,7 +59,7 @@ module.exports = Backprop.Model.extend({
         var splitCmd = this.parseCommand(this.command);
         var childProcess = spawn(splitCmd.cmd, splitCmd.args, { cwd: this.rootDir });
 
-        var parser = PARSERS[this.parser];
+        var parser = parsers[this.parser];
         parser(childProcess, task);
     }
 }, {
