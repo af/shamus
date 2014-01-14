@@ -21,7 +21,6 @@ module.exports = Backbone.View.extend({
 
     initialize: function() {
         this.render();
-        this.$status = this.$('.status');
         this.$error = this.$('.errorMsg');
 
         this.listenTo(this.model, 'change:isRunning', this.updateStatus.bind(this));
@@ -40,13 +39,13 @@ module.exports = Backbone.View.extend({
             this.$('.timestamp').html(timestamp);
         }
 
-        if (task.isRunning) this.$status.removeClass('ok error').addClass('running');
+        if (task.isRunning) this.$el.removeClass('ok error').addClass('running');
         else {
             if (task.isOK) {
                 this.$el.removeClass('hasError');
-                this.$status.removeClass('running error').addClass('ok');
+                this.$el.removeClass('running error').addClass('ok');
                 this.$error.html('');
-            } else this.$status.removeClass('running ok').addClass('error');
+            } else this.$el.removeClass('running ok').addClass('error');
             this.trigger('changeStatus');
         }
     },

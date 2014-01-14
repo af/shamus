@@ -23,6 +23,7 @@ body {
   padding: 0;
   background: linear-gradient(#ddd, #ccc);
   font-family: 'Open Sans2', sans-serif;
+  color: #222;
 }
 #taskContainer {
   padding: 0;
@@ -54,13 +55,17 @@ body {
   display: inline;
   margin-right: 20px;
 }
-#taskContainer .timestamp {
-  opacity: 0.6;
+.timestamp {
   font-weight: 300;
   font-size: 0.8rem;
   line-height: 2rem;
   float: right;
   padding-right: 0.5rem;
+  -webkit-transition: color 0s;
+}
+.ok .timestamp {
+  color: #a7a7a7;
+  -webkit-transition: color 30s;
 }
 .status {
   float: left;
@@ -77,31 +82,31 @@ body {
   text-align: center;
   transition: background 0.2s;
 }
-.status.ok {
+.ok .status {
   background: #8cba7b;
 }
-.status.ok div {
+.ok .status div {
   -webkit-animation: pulse 0.5s;
 }
-.status.ok div:before {
+.ok .status div:before {
   content: '√';
 }
-.status.error {
+.error .status {
   background: #c33;
 }
-.status.error div {
+.error .status div {
   -webkit-animation: pulse 0.5s;
 }
-.status.error div:before {
+.error .status div:before {
   content: 'X';
 }
-.status.running {
+.running .status {
   background: #cccf49;
 }
-.status.running div {
+.running .status div {
   -webkit-animation: rotate 1.5s infinite linear;
 }
-.status.running div:before {
+.running .status div:before {
   content: 'r';
 }
 .errorMsg:not(:empty) {
