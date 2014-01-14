@@ -20,6 +20,7 @@ module.exports = Backprop.Model.extend({
     rootDir: Backprop.String(),
     isRunning: Backprop.Boolean({ default: false }),
     isOK: Backprop.Boolean(),
+    lastRunAt: Backprop.Date(),
     parser: Backprop.String({ choices: Object.keys(parsers), 'default': 'exitcode' }),
 
     initialize: function() {
@@ -54,6 +55,7 @@ module.exports = Backprop.Model.extend({
     run: function() {
         var task = this;
         task.isRunning = true;
+        task.lastRunAt = new Date();
         // TODO: throttling & not running multiple times simultaneously
         var splitCmd = this.parseCommand(this.command);
         var childProcess = spawn(splitCmd.cmd, splitCmd.args, { cwd: this.rootDir });

@@ -6,9 +6,10 @@ module.exports = Backbone.View.extend({
     template: swig.compile(
         '<div class="status"> <div></div> </div>' +
         '<div>' +
-            '<h1>{{ name }}</h1></div>' +
-            '<div class="errorMsg">' +
-        '</div>'
+            '<h1>{{ name }}</h1>' +
+            '<span class="timestamp"></span>' +
+        '</div>' +
+        '<div class="errorMsg"></div>'
     ),
     errorTemplate: swig.compile(
         '<div class="metadata">' +
@@ -34,6 +35,11 @@ module.exports = Backbone.View.extend({
     },
 
     updateStatus: function(task) {
+        if (task.lastRunAt instanceof Date) {
+            var timestamp = '@' + task.lastRunAt.toTimeString().replace(/ .+/, '');
+            this.$('.timestamp').html(timestamp);
+        }
+
         if (task.isRunning) this.$status.removeClass('ok error').addClass('running');
         else {
             if (task.isOK) {
