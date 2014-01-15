@@ -29,8 +29,13 @@ module.exports = Backprop.Model.extend({
         var watchRegex = new RegExp(task.fileMatcher);
 
         fileBus.on('change', function(filename) {
-            var isMatch = (watchRegex.test(filename));
-            if (isMatch) task.run();
+            if (!watchRegex.test(filename)) return;
+
+            // node-watch sometimes triggers multiple events for one file change
+            // so add some simple debouncing:
+            var debounceInterval = 1400;
+            var timeSinceLastRun = (new Date - task.lastRunAt) || Infinity;
+            if (timeSinceLastRun > debounceInterval) task.run();
         });
     },
 
