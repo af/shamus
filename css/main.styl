@@ -67,11 +67,10 @@ html, body
     line-height: 2rem
     float: right
     padding-right: 0.5rem
-    -webkit-transition: color 0s
 
     .ok &
-        color: lighten($textColour, 60%)
-        -webkit-transition: color 30s   // Gradually fade out timestamp as task gets stale
+        // Gradually fade out timestamp as task gets stale
+        -webkit-animation: lightenColor 30s forwards
 
 .status
     float: left
@@ -86,7 +85,6 @@ html, body
     font-weight: bold
     line-height: $statusWidth
     text-align: center
-    transition: background 0.2s
 
     .ok &
         background: #8cba7b
@@ -150,3 +148,9 @@ html, body
 
     100%
         -webkit-transform: scale(1)
+
+@-webkit-keyframes lightenColor
+    0%
+        color: $textColour
+    100%
+        color: lighten($textColour, 60%)

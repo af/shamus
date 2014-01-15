@@ -61,11 +61,9 @@ body {
   line-height: 2rem;
   float: right;
   padding-right: 0.5rem;
-  -webkit-transition: color 0s;
 }
 .ok .timestamp {
-  color: #a7a7a7;
-  -webkit-transition: color 30s;
+  -webkit-animation: lightenColor 30s forwards;
 }
 .status {
   float: left;
@@ -80,7 +78,6 @@ body {
   font-weight: bold;
   line-height: 40px;
   text-align: center;
-  transition: background 0.2s;
 }
 .ok .status {
   background: #8cba7b;
@@ -148,5 +145,14 @@ body {
 
   100% {
     -webkit-transform: scale(1);
+  }
+}
+@-webkit-keyframes lightenColor {
+  0% {
+    color: #222;
+  }
+
+  100% {
+    color: #a7a7a7;
   }
 }
