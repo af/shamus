@@ -44,7 +44,7 @@ body {
 #taskContainer li:after {
   clear: both;
 }
-#taskContainer li.hasError {
+#taskContainer li.error {
   background: #eee;
 }
 #taskContainer h1 {
@@ -115,29 +115,18 @@ body {
   padding: 0.5rem;
   white-space: pre;
   font-family: monospace;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   color: #c33;
   overflow: auto;
 }
-.errorMsg:not(:empty) .metadata {
-  position: absolute;
-  right: 0;
-  top: 2rem;
-  padding: 0.5rem;
-  opacity: 0.1;
-  color: #555;
-  pointer-events: none;
-  line-height: 0.5;
-  text-align: right;
+.metadata {
+  margin-top: -0.2rem;
+  font-size: 0.75rem;
+  line-height: 1;
+  color: #999;
 }
-.errorMsg:not(:empty) .metadata b {
-  display: block;
-}
-.errorMsg:not(:empty) .metadata b.outputType {
-  font-size: 2em;
-}
-.errorMsg:not(:empty) .metadata b.returnCode {
-  font-size: 1.5em;
+.metadata .outputType:after {
+  content: ' – ';
 }
 @-webkit-keyframes rotate {
   0% {

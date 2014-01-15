@@ -2,13 +2,14 @@ $statusWidth = 40px
 $paddingWidth = 0.5rem
 $errorColour = #cc3333
 $textColour = #222
+$defaultFont = 'Open Sans2'
 
 @font-face
-    font-family: 'Open Sans2'
+    font-family: $defaultFont
     font-weight: 300
     src: url('OpenSans-Light.ttf') format('truetype')
 @font-face
-    font-family: 'Open Sans2'
+    font-family: $defaultFont
     font-weight: normal
     src: url('OpenSans-Regular.ttf') format('truetype')
 
@@ -34,7 +35,7 @@ html, body
     margin: 0
     padding: 0
     background: linear-gradient(#ddd, #ccc)
-    font-family: 'Open Sans2', sans-serif
+    font-family: $defaultFont, sans-serif
     color: $textColour
 
 #taskContainer
@@ -49,7 +50,7 @@ html, body
         position: relative
         clearfix()
 
-        &.hasError
+        &.error
             background: #eee
 
     h1
@@ -120,28 +121,19 @@ html, body
     padding: $paddingWidth
     white-space: pre
     font-family: monospace
-    font-size: 0.8rem
+    font-size: 0.85rem
     color: $errorColour
     overflow: auto
 
-    .metadata
-        position: absolute
-        right: 0
-        top: 2rem
-        padding: $paddingWidth
-        opacity: 0.1
-        color: #555
-        pointer-events: none
-        line-height: 0.5
-        text-align: right
+.metadata
+    margin-top: -0.2rem
+    font-size: 0.75rem
+    line-height: 1
+    color: #999
 
-        b
-            display: block
+    .outputType:after
+        content: ' – '
 
-            &.outputType
-                font-size: 2em
-            &.returnCode
-                font-size: 1.5em
 
 @-webkit-keyframes rotate
     0%

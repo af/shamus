@@ -21,6 +21,7 @@ module.exports = Backprop.Model.extend({
     isRunning: Backprop.Boolean({ default: false }),
     isOK: Backprop.Boolean(),
     lastRunAt: Backprop.Date(),
+    lastError: Backprop.Generic(),
     parser: Backprop.String({ choices: Object.keys(parsers), 'default': 'exitcode' }),
 
     initialize: function() {
@@ -47,9 +48,9 @@ module.exports = Backprop.Model.extend({
     },
 
     error: function(errObj) {
+        this.lastError = errObj;
         this.isOK = false;
         this.isRunning = false;
-        this.trigger('error', this, errObj);
     },
 
     run: function() {
