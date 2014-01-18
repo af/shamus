@@ -3,7 +3,10 @@ exports.tap = function(childProcess, task) {
         if (results.ok) task.success();
         else {
             var output = results.fail.length + ' tests failed';
-            results.fail.forEach(function(f) { output += ('\n\n* ' + f.name); });
+            results.fail.forEach(function(f) {
+                var entry = ('\n\n* ' + f.name + '\n' + f.extra);
+                output += entry;
+            });
             task.error({
                 msg: output,
                 outputType: 'tap'
