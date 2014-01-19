@@ -39,7 +39,8 @@ else if (arg) {
 // Pass the current dir as an arg to the node-webkit app (so it can look for .shamus.json)
 // Would love to use "npm start" instead for this, but currently can't pass extra args to it.
 // See https://github.com/isaacs/npm/issues/3494
-var cmd = './node_modules/nodewebkit/bin/nodewebkit . ' + launchDir;
+var cmd = './node_modules/nodewebkit/bin/nodewebkit . ' + launchDir +
+          ' --mac_plist=./platform/Info.plist --mac_icon=./platform/shamus.icns';
 
 console.log('Starting shamus from', launchDir, '...');
 var child = cp.exec(cmd, { cwd: path.resolve(__dirname, '..') });
