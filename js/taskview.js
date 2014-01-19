@@ -7,7 +7,7 @@ module.exports = Backbone.View.extend({
         '<div class="status"> <div></div> </div>' +
         '<div>' +
             '<span class="timestamp">{{ timestamp }}</span>' +
-            '<h1>{{ task.name }}</h1>' +
+            '<h1>{{ task.name|default(task.command) }}</h1>' +
             '<div class="metadata">' +
                 '{% if err.outputType %} <span class="outputType">{{ err.outputType }}</span>{% endif %}' +
                 '{% if err.code %} <span class="returnCode">return code {{ err.code }}</span> {% endif %}' +

@@ -14,7 +14,7 @@ var fileBus = _.extend({}, Backbone.Events);
 
 
 module.exports = Backprop.Model.extend({
-    name: Backprop.String({ default: 'Unnamed task' }),
+    name: Backprop.String(),
     command: Backprop.String(),
     fileMatcher: Backprop.String(),
     rootDir: Backprop.String(),
