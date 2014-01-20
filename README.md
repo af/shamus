@@ -64,14 +64,38 @@ Installing and Running the app
 JSON Config Format
 ------------------
 
-TODO: document this. Although the example above covers most of it.
+A `.shamus.json` config file tells Shamus which tasks to run (the `"tasks"`
+section, which should contain an array of task objects), and how to display
+the app on the desktop (the optional `"window"` section). The following keys
+are supported
+
+### task objects
+
+* `command` - The command to run when a matched file changes
+* `fileMatcher` - A regular expression string that matches files that, when
+                  they change, trigger the task run
+* `parser` - (optional) How to parse the output of the task, and determine
+             whether it succeeded or failed. See the Parsers section below.
+* `name` - (optional) The name of the task, as displayed in the shamus app.
+
+### window parameters
+
+All window parameters are optional, and you can omit the section entirely
+
+* `alwaysOnTop` - The shamus window will always be on top of all other windows
+* `width` - The width of shamus's window, in pixels. Defaults to 400.
+* `top`, `bottom`, `left`, `right` - Similar to CSS's properties, these parameters
+  let you set where shamus should sit on your desktop. For example, using
+  `"right": 0, "top": 0` will put the window in the top right corner of your desktop.
+
 
 
 Parsers
 -------
 
 Shamus ships with a couple of simple parsers, which check the results of
-your task process and report a success or failure to the app:
+your task process and report a success or failure to the app. If no parser
+is specified for a task, `"exitcode"` will be used.
 
 * `"exitcode"` - Detects a success if the task process has an exit code of 0.
 * `"tap"` - Parses [TAP](http://en.wikipedia.org/wiki/Test_Anything_Protocol)
