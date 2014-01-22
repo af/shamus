@@ -14,15 +14,18 @@ module.exports = Backbone.View.extend({
         'keyup': 'keypressDispatch'
     },
 
-    configure: function(config) {
+    configure: function(config, projectDir) {
         this.config = config || {};
-        this.config.projectDir = config.projectDir;
-        this.config.window = this.config.window || {};
+        this.projectDir = projectDir;
     },
 
-    initWindow: function(window, nwWindow) {
+    // Set up the application window
+    // window - The global js window object
+    // nwWindow - The node-webkit window object
+    // windowConfig - Optional config object parsed from .shamus.json
+    initWindow: function(window, nwWindow, windowConfig) {
         var app = this;
-        var windowConfig = this.config.window;
+        windowConfig = windowConfig || {};
         windowConfig.width = windowConfig.width || 400;     // Default width if none is specified
         this.window = window;
         this.screen = window.screen;
@@ -30,7 +33,7 @@ module.exports = Backbone.View.extend({
 
         // Setup our node-webkit window
         // See https://github.com/rogerwang/node-webkit/wiki/Window
-        nwWindow.title = this.config.projectDir;
+        nwWindow.title = this.projectDir;
         nwWindow.setAlwaysOnTop(windowConfig.alwaysOnTop || false);
 
         this.resizeWindow(windowConfig);
@@ -45,14 +48,14 @@ module.exports = Backbone.View.extend({
         var app = this;
         var resizeFn = app.resizeWindow.bind(app);
         taskList.forEach(function(taskSpec) {
-            taskSpec.rootDir = app.config.projectDir;
+            taskSpec.rootDir = app.projectDir;
             var t = new Task(taskSpec);
             var v = new TaskView({ model: t });
             v.on('changeStatus', resizeFn);
             app.$('#taskContainer')[0].appendChild(v.el);
             t.run();
         });
-        Task.startLoop(this.config.projectDir);
+        Task.startLoop(this.projectDir);
     },
 
     // Position the window in the top right of the screen on startup.
