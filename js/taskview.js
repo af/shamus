@@ -6,7 +6,10 @@ module.exports = Backbone.View.extend({
     template: swig.compile(
         '<div class="status"> <div></div> </div>' +
         '<div>' +
-            '<span class="timestamp">{{ timestamp }}</span>' +
+            '<span class="timestamp">' +
+                '{%if runtime %} {{ runtime }}s {% endif %}' +
+                '{{ timestamp }}' +
+            '</span>' +
             '<h1>{{ task.name|default(task.command) }}</h1>' +
             '<div class="metadata">' +
                 '{% if err.outputType %} <span class="outputType">{{ err.outputType }}</span>{% endif %}' +
@@ -35,7 +38,12 @@ module.exports = Backbone.View.extend({
 
             this.trigger('changeStatus');
 
-            var ctx = { task: this.model, err: errObj, timestamp: timestamp };
+            var ctx = {
+                task: this.model,
+                err: errObj,
+                timestamp: timestamp,
+                runtime: this.model.lastRunDuration && (this.model.lastRunDuration / 1000).toFixed(2)
+            };
             this.$el.html(this.template(ctx));
         }
     }
