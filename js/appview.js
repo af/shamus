@@ -1,3 +1,4 @@
+var path = require('path');
 var Backbone = require('backbone');
 
 var Task = require('./task');
@@ -9,20 +10,27 @@ var TaskView = require('./taskview');
 // document.body should be passed in as view.el.
 module.exports = Backbone.View.extend({
     menubarHeight: 22,     // Accurate on OS X 10.8, probably needs to be adjusted for platform
+    started: false,
 
     events: {
         'keyup': 'keypressDispatch'
     },
 
-    configure: function(config, projectDir) {
+    configure: function(projectDir) {
+        var taskFile = path.join(projectDir, '.shamus.json');
+        var config = JSON.parse(require('fs').readFileSync(taskFile, 'utf8'));
         this.config = config || {};
         this.projectDir = projectDir;
+    },
+
+    start: function(window, nwWindow) {
+        if (!this.started) this.initWindow(window, nwWindow, this.config.window);
+        this.initTasks(this.config.tasks);
     },
 
     // Set up the application window
     // window - The global js window object
     // nwWindow - The node-webkit window object
-    // windowConfig - Optional config object parsed from .shamus.json
     initWindow: function(window, nwWindow, windowConfig) {
         var app = this;
         windowConfig = windowConfig || {};
@@ -47,6 +55,8 @@ module.exports = Backbone.View.extend({
     initTasks: function(taskList) {
         var app = this;
         var resizeFn = app.resizeWindow.bind(app);
+
+        app.$('#taskContainer').html('');
         taskList.forEach(function(taskSpec) {
             taskSpec.rootDir = app.projectDir;
             var t = new Task(taskSpec);
@@ -55,7 +65,9 @@ module.exports = Backbone.View.extend({
             app.$('#taskContainer')[0].appendChild(v.el);
             t.run();
         });
-        Task.startLoop(this.projectDir);
+
+        if (!this.started) Task.startLoop(this.projectDir);
+        this.started = true;
     },
 
     // Position the window in the top right of the screen on startup.
@@ -90,6 +102,9 @@ module.exports = Backbone.View.extend({
         if (evt.keyCode === 68 && evt.ctrlKey) this.nwWindow.showDevTools();
         // Hitting Ctrl-r refreshes the page/window:
         // FIXME: this inits an additional recursive file watcher; should clean up the old one
-        if (evt.keyCode === 82 && evt.ctrlKey) this.window.location.reload();
+        if (evt.keyCode === 82 && evt.ctrlKey) {
+            this.configure(this.projectDir);    // Reload .shamus.json
+            this.start();                       // Restart tasks
+        }
     }
 });

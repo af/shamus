@@ -9,11 +9,8 @@ Backbone.$ = require('littledom');
 // (ie. where the app was started from):
 var appDir = path.dirname(location.pathname);   // dir where shamus code is located
 var projectDir = gui.App.argv[0] || appDir;     // dir where the app was launched
-var taskFile = path.join(projectDir, '.shamus.json');
-var config = JSON.parse(require('fs').readFileSync(taskFile, 'utf8'));
 
 var AppView = require('./js/appview');
 var app = new AppView({ el: document.body });
-app.configure(config, projectDir);
-app.initWindow(window, gui.Window.get(), config.window);
-app.initTasks(config.tasks);
+app.configure(projectDir);
+app.start(window, gui.Window.get());
