@@ -102,6 +102,15 @@ is specified for a task, `"exitcode"` will be used.
             output and reports success if there are 0 failures.
 
 
+Tips and Tricks
+---------------
+* `Ctrl-r` refreshes the app (and detects changes to `.shamus.json`)
+* `Ctrl-d` opens the node-webkit devtools
+* If you’re hacking on shamus, use `npm start` to launch the app, instead of
+  the `shamus` script. This will ensure that all app logging and tracebacks
+  will be dumped to the terminal where the app was launched.
+
+
 Screenshots
 -----------
 
