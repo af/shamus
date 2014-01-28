@@ -122,9 +122,6 @@ body {
   line-height: 1;
   color: #999;
 }
-.metadata .outputType:after {
-  content: ' – ';
-}
 @-webkit-keyframes rotate {
   0% {
     -webkit-transform: rotate(0deg);
