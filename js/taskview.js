@@ -1,23 +1,13 @@
+var fs = require('fs');
 var Backbone = require('backbone');
 var swig = require('swig');
 
+var templatePath = require('path').resolve(__dirname, 'taskview.swig');
+var template = swig.compile(fs.readFileSync(templatePath, 'utf8'));
+
 module.exports = Backbone.View.extend({
     tagName: 'li',
-    template: swig.compile(
-        '<div class="status"> <div></div> </div>' +
-        '<div>' +
-            '<span class="timestamp">' +
-                '{%if runtime %} {{ runtime }}s {% endif %}' +
-                '{{ timestamp }}' +
-            '</span>' +
-            '<h1>{{ task.name|default(task.command) }}</h1>' +
-            '<div class="metadata">' +
-                '{% if err.outputType %} <span class="outputType">{{ err.outputType }}</span>{% endif %}' +
-                '{% if err.code %} <span class="returnCode">– return code {{ err.code }}</span> {% endif %}' +
-            '</div>' +
-        '</div>' +
-        '<div class="errorMsg">{{ err.msg }}</div>'
-    ),
+    template: template,
 
     initialize: function() {
         this.listenTo(this.model, 'change:isRunning', this.render.bind(this));
