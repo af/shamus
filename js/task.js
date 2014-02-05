@@ -7,13 +7,8 @@ var Backprop = require('backprop');
 var parsers = require('./parsers');
 Backprop.extendModel(Backbone.Model);
 
-// TODO: the current single-fileBus system can only work when watching a
-// single directory. Should add an extra abstraction so that we can watch
-// multiple dirs at a time from different tasks.
-var fileBus = _.extend({}, Backbone.Events);
 
-
-module.exports = Backprop.Model.extend({
+var Task = Backprop.Model.extend({
     name: Backprop.String(),
     command: Backprop.String(),
     fileMatcher: Backprop.String(),
@@ -29,7 +24,7 @@ module.exports = Backprop.Model.extend({
         var task = this;
         var watchRegex = new RegExp(task.fileMatcher);
 
-        fileBus.on('change', function(filename) {
+        Task._fileBus.on('change', function(filename) {
             if (!watchRegex.test(filename)) return;
 
             // node-watch sometimes triggers multiple events for one file change
@@ -75,11 +70,16 @@ module.exports = Backprop.Model.extend({
     }
 }, {
 
+    // Static event emitter that emits 'change' events when a watched file changes:
+    _fileBus: _.extend({}, Backbone.Events),
+
     // Static method to run a single recursive watch() over the root directory.
     // If we run one watch() per task, only the first one works for some reason.
     startLoop: function(rootDir) {
         watch(rootDir, function(filename) {
-            fileBus.trigger('change', filename);
+            Task._fileBus.trigger('change', filename);
         });
     }
 });
+
+module.exports = Task;
