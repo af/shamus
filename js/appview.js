@@ -24,8 +24,12 @@ Config.prototype = {
     getTasks: function() {
         return this.parsed.tasks || [];
     },
+
     getWatchPaths: function() {
-        return this.parsed.watcher.paths;
+        var config = this;
+        return this.parsed.watcher.paths.map(function(p) {
+            return path.join(config.rootDir, p);    // Return fully resolved paths
+        });
     }
 };
 
