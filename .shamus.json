@@ -4,6 +4,9 @@
         "top": 0,
         "right": 0
     },
+    "watcher": {
+        "paths": ["js", "css"]
+    },
     "tasks": [
         {
             "name": "Mocha tests",

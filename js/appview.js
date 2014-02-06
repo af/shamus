@@ -9,7 +9,9 @@ var TaskView = require('./taskview');
 function Config(rootDir) {
     this.rootDir = rootDir;
     var pathToFile = path.join(rootDir, '.shamus.json');
+
     this.parsed = JSON.parse(require('fs').readFileSync(pathToFile, 'utf8'));
+    if (!this.parsed.watcher) this.parsed.watcher = { paths: ['.'] };
 }
 Config.prototype = {
     getRootDir: function() { return this.rootDir },
@@ -23,7 +25,7 @@ Config.prototype = {
         return this.parsed.tasks || [];
     },
     getWatchPaths: function() {
-        return ['.'];
+        return this.parsed.watcher.paths;
     }
 };
 

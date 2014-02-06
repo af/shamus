@@ -88,6 +88,16 @@ All window parameters are optional, and you can omit the section entirely
   let you set where shamus should sit on your desktop. For example, using
   `"right": 0, "top": 0` will put the window in the top right corner of your desktop.
 
+### watcher parameters
+
+By default, shamus recursively watches all files in the project's root directory.
+If there are a lot of files in your project, this can lead to the dreaded EMFILE
+error. To combat this, set your config's `watcher.paths` to an array of the files/dirs
+you want shamus to monitor.
+
+Note: if you change `watcher.paths`, you'll need to restart shamus for it to take
+effect (refreshing the app will not pick up the change).
+
 
 
 Parsers
