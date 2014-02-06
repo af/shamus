@@ -12,5 +12,4 @@ var projectDir = gui.App.argv[0] || appDir;     // dir where the app was launche
 
 var AppView = require('./js/appview');
 var app = new AppView({ el: document.body });
-app.configure(projectDir);
-app.start(window, gui.Window.get());
+app.start(projectDir, window, gui.Window.get());

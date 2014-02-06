@@ -5,6 +5,29 @@ var Task = require('./task');
 var TaskView = require('./taskview');
 
 
+// Small helper class for handling config loading and default values.
+function Config(rootDir) {
+    this.rootDir = rootDir;
+    var pathToFile = path.join(rootDir, '.shamus.json');
+    this.parsed = JSON.parse(require('fs').readFileSync(pathToFile, 'utf8'));
+}
+Config.prototype = {
+    getRootDir: function() { return this.rootDir },
+    getWindowSettings: function() {
+        var w = this.parsed.window || {};
+        w.width = w.width || 400;     // Default width if none is specified
+        w.alwaysOnTop = w.alwaysOnTop || false;
+        return w;
+    },
+    getTasks: function() {
+        return this.parsed.tasks || [];
+    },
+    getWatchPaths: function() {
+        return ['.'];
+    }
+};
+
+
 // AppView
 // A Backbone view to manage UI at the app/window level.
 // document.body should be passed in as view.el.
@@ -16,16 +39,10 @@ module.exports = Backbone.View.extend({
         'keyup': 'keypressDispatch'
     },
 
-    configure: function(projectDir) {
-        var taskFile = path.join(projectDir, '.shamus.json');
-        var config = JSON.parse(require('fs').readFileSync(taskFile, 'utf8'));
-        this.config = config || {};
-        this.projectDir = projectDir;
-    },
-
-    start: function(window, nwWindow) {
-        if (!this.started) this.initWindow(window, nwWindow, this.config.window);
-        this.initTasks(this.config.tasks);
+    start: function(projectDir, window, nwWindow) {
+        this.config = new Config(projectDir);
+        if (!this.started) this.initWindow(window, nwWindow, this.config.getWindowSettings());
+        this.initTasks(this.config.getTasks());
     },
 
     // Set up the application window
@@ -33,18 +50,16 @@ module.exports = Backbone.View.extend({
     // nwWindow - The node-webkit window object
     initWindow: function(window, nwWindow, windowConfig) {
         var app = this;
-        windowConfig = windowConfig || {};
-        windowConfig.width = windowConfig.width || 400;     // Default width if none is specified
         this.window = window;
         this.screen = window.screen;
         this.nwWindow = nwWindow;
 
         // Setup our node-webkit window
         // See https://github.com/rogerwang/node-webkit/wiki/Window
-        nwWindow.title = this.projectDir;
-        nwWindow.setAlwaysOnTop(windowConfig.alwaysOnTop || false);
+        nwWindow.title = this.config.getRootDir();
+        nwWindow.setAlwaysOnTop(windowConfig.alwaysOnTop);
 
-        this.resizeWindow(windowConfig);
+        this.resizeWindow();
         setTimeout(function() {
             app.moveWindow(windowConfig);
             nwWindow.show();
@@ -58,7 +73,7 @@ module.exports = Backbone.View.extend({
 
         app.$('#taskContainer').html('');
         taskList.forEach(function(taskSpec) {
-            taskSpec.rootDir = app.projectDir;
+            taskSpec.rootDir = app.config.getRootDir();
             var t = new Task(taskSpec);
             var v = new TaskView({ model: t });
             v.on('changeStatus', resizeFn);
@@ -66,7 +81,7 @@ module.exports = Backbone.View.extend({
             t.run();
         });
 
-        if (!this.started) Task.startLoop(this.projectDir);
+        if (!this.started) Task.startLoop(this.config.getWatchPaths());
         this.started = true;
     },
 
@@ -82,10 +97,10 @@ module.exports = Backbone.View.extend({
     },
 
     // Resize window so it takes exactly the same height as the list of tasks:
-    resizeWindow: function(windowConfig) {
-        windowConfig = windowConfig || {};
+    resizeWindow: function() {
         var view = this;
         var w = this.window;
+        var windowConfig = this.config.getWindowSettings();
 
         // Give webkit a little time to re-render the resized elements before we detect the
         // height to change the window to:
@@ -98,13 +113,12 @@ module.exports = Backbone.View.extend({
 
     // Handle keypresses app-wide
     keypressDispatch: function(evt) {
-        // Hitting Ctrl-d opens the devtools:
+        // Ctrl-d opens the devtools:
         if (evt.keyCode === 68 && evt.ctrlKey) this.nwWindow.showDevTools();
-        // Hitting Ctrl-r refreshes the page/window:
-        // FIXME: this inits an additional recursive file watcher; should clean up the old one
+
+        // Ctrl-r refreshes the page/window:
         if (evt.keyCode === 82 && evt.ctrlKey) {
-            this.configure(this.projectDir);    // Reload .shamus.json
-            this.start();                       // Restart tasks
+            this.start(this.config.getRootDir(), this.window, this.nwWindow);    // Reload .shamus.json and restart tasks
         }
     }
 });

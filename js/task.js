@@ -75,8 +75,8 @@ var Task = Backprop.Model.extend({
 
     // Static method to run a single recursive watch() over the root directory.
     // If we run one watch() per task, only the first one works for some reason.
-    startLoop: function(rootDir) {
-        watch(rootDir, function(filename) {
+    startLoop: function(pathsToWatch) {
+        watch(pathsToWatch, function(filename) {
             Task._fileBus.trigger('change', filename);
         });
     }
