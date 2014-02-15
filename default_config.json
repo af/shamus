@@ -5,6 +5,10 @@
         "right": 0
     },
 
+    "watcher": {
+        "paths": ["."]
+    },
+
     "tasks": [
         {
             "name": "JSHint",

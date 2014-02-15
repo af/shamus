@@ -38,6 +38,10 @@ Installing and Running the app
           "right": 0
       },
 
+      "watcher": {
+          "paths": ["."]
+      },
+
       "tasks": [
           {
               "name": "JSHint",
