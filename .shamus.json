@@ -9,8 +9,8 @@
     },
     "tasks": [
         {
-            "name": "Mocha tests",
-            "command": "mocha tests -R tap",
+            "name": "JS Tests",
+            "command": "npm test",
             "parser": "tap",
             "fileMatcher": "\\.js$"
         },
