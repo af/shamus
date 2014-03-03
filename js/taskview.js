@@ -11,11 +11,12 @@ module.exports = Backbone.View.extend({
 
     initialize: function() {
         this.listenTo(this.model, 'change:isRunning', this.render.bind(this));
+        this.render(this.model);
     },
 
     render: function(task) {
         var errObj = !task.isOK && task.lastError;
-        var timestamp = null;
+        var timestamp = '';
         if (task.lastRunAt instanceof Date) {
             timestamp = '@' + task.lastRunAt.toTimeString().replace(/ .+/, '');
             this.$('.timestamp').html(timestamp);
