@@ -87,6 +87,11 @@ module.exports = Backbone.View.extend({
             t.run();
         });
 
+        this.nwWindow.on('close', function() {
+            Task.killAll();
+            app.nwWindow.close(true);
+        });
+
         if (!this.started) Task.startLoop(this.config.getWatchPaths());
         this.started = true;
     },

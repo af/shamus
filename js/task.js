@@ -1,4 +1,4 @@
-var spawn = require('child_process').spawn;
+var exec = require('child_process').exec;
 var watch = require('node-watch');
 
 var _ = require('underscore');
@@ -19,6 +19,7 @@ var Task = Backprop.Model.extend({
     lastRunDuration: Backprop.Number(),
     lastError: Backprop.Generic(),
     parser: Backprop.String({ choices: Object.keys(parsers), 'default': 'exitcode' }),
+    daemon: Backprop.Boolean({ default: false }),
 
     initialize: function() {
         var task = this;
@@ -33,14 +34,10 @@ var Task = Backprop.Model.extend({
             var timeSinceLastRun = (new Date - task.lastRunAt) || Infinity;
             if (timeSinceLastRun > debounceInterval) task.run();
         });
-    },
 
-    parseCommand: function(cmdString) {
-        var parts = cmdString.split(' ');
-        return {
-            cmd: parts[0],
-            args: parts.slice(1)
-        };
+        Task._fileBus.on('exit', function() {
+            if (task.childProcess) task.childProcess.kill();
+        });
     },
 
     success: function() {
@@ -56,17 +53,18 @@ var Task = Backprop.Model.extend({
 
     run: function() {
         var task = this;
-        task.isRunning = true;
-        task.lastRunAt = new Date();
+        if (this.daemon && this.childProcess) this.childProcess.kill();
+
+        this.isRunning = true;
+        this.lastRunAt = new Date();
         // TODO: throttling & not running multiple times simultaneously
-        var splitCmd = this.parseCommand(this.command);
-        var childProcess = spawn(splitCmd.cmd, splitCmd.args, { cwd: this.rootDir });
-        childProcess.on('exit', function() {
+        this.childProcess = exec(this.command, { cwd: this.rootDir });
+        this.childProcess.on('exit', function() {
             task.lastRunDuration = (new Date() - task.lastRunAt);
         });
 
         var parser = parsers[this.parser];
-        parser(childProcess, task);
+        parser(this.childProcess, task);
     }
 }, {
 
@@ -79,7 +77,12 @@ var Task = Backprop.Model.extend({
         watch(pathsToWatch, function(filename) {
             Task._fileBus.trigger('change', filename);
         });
-    }
+    },
+
+    // Send a message to all tasks that they should exit immediately
+    killAll: function() {
+        Task._fileBus.trigger('exit');
+    },
 });
 
 module.exports = Task;
