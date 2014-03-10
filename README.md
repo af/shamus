@@ -76,8 +76,8 @@ are supported
 ### task objects
 
 * `command` - The command to run when a matched file changes
-* `fileMatcher` - A regular expression string that matches files that, when
-                  they change, trigger the task run
+* `fileMatcher` - A regular expression string to match files that, when
+                  they change, trigger the task run. The default value matches nothing.
 * `parser` - (optional) How to parse the output of the task, and determine
              whether it succeeded or failed. See the Parsers section below.
 * `name` - (optional) The name of the task, as displayed in the shamus app.

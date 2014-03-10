@@ -11,7 +11,7 @@ Backprop.extendModel(Backbone.Model);
 var Task = Backprop.Model.extend({
     name: Backprop.String(),
     command: Backprop.String(),
-    fileMatcher: Backprop.String(),
+    fileMatcher: Backprop.String({ default: /a^/ }),    // Match nothing by default
     rootDir: Backprop.String(),
     isRunning: Backprop.Boolean({ default: false }),
     isOK: Backprop.Boolean(),
