@@ -113,6 +113,15 @@ html, body
         div:before
             content: 'r'
 
+    .daemon.running &
+        background: #8cba7b
+
+        div
+            -webkit-animation: none
+
+        div:before
+            content: 'D'
+
 .errorMsg:not(:empty)
     float: right
     width: 100%

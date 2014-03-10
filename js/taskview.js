@@ -22,6 +22,7 @@ module.exports = Backbone.View.extend({
             this.$('.timestamp').html(timestamp);
         }
 
+        if (task.daemon) this.$el.addClass('daemon');
         if (task.isRunning) this.$el.removeClass('ok error').addClass('running');
         else {
             if (task.isOK) this.$el.removeClass('running error').addClass('ok');

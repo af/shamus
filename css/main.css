@@ -106,6 +106,15 @@ body {
 .running .status div:before {
   content: 'r';
 }
+.daemon.running .status {
+  background: #8cba7b;
+}
+.daemon.running .status div {
+  -webkit-animation: none;
+}
+.daemon.running .status div:before {
+  content: 'D';
+}
 .errorMsg:not(:empty) {
   float: right;
   width: 100%;
