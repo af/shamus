@@ -74,6 +74,7 @@ html, body
 
 .status
     float: left
+    position: relative
     width: $statusWidth
     height: $statusWidth
     margin-right: $paddingWidth
@@ -89,38 +90,47 @@ html, body
     .ok &
         background: #8cba7b
 
-        div
+        .icon
             -webkit-animation: pulse 0.5s
 
-        div:before
-            content: '√'
+            &:before
+                content: '√'
 
     .error &
         background: $errorColour
 
-        div
+        .icon
             -webkit-animation: pulse 0.5s
 
-        div:before
-            content: 'X'
+            &:before
+                content: 'X'
 
     .running &
         background: #cccf49
 
-        div
+        .icon
             -webkit-animation: rotate 1.5s infinite linear
 
-        div:before
-            content: 'r'
+            &:before
+                content: 'r'
 
     .daemon.running &
         background: #8cba7b
 
-        div
+        .icon
             -webkit-animation: none
 
-        div:before
-            content: 'D'
+            &:before
+                content: 'r'
+            &:after
+                content: 'D'
+                position: absolute
+                right: 0.1rem
+                bottom: 0.1rem
+                line-height: 1
+                font-size: 1rem
+                color: rgba(#fff, 0.9)
+                text-shadow: 0 0 4px rgba(#000, 0.5)
 
 .errorMsg:not(:empty)
     float: right

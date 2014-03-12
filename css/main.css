@@ -67,6 +67,7 @@ body {
 }
 .status {
   float: left;
+  position: relative;
   width: 40px;
   height: 40px;
   margin-right: 0.5rem;
@@ -82,38 +83,48 @@ body {
 .ok .status {
   background: #8cba7b;
 }
-.ok .status div {
+.ok .status .icon {
   -webkit-animation: pulse 0.5s;
 }
-.ok .status div:before {
+.ok .status .icon:before {
   content: '√';
 }
 .error .status {
   background: #c33;
 }
-.error .status div {
+.error .status .icon {
   -webkit-animation: pulse 0.5s;
 }
-.error .status div:before {
+.error .status .icon:before {
   content: 'X';
 }
 .running .status {
   background: #cccf49;
 }
-.running .status div {
+.running .status .icon {
   -webkit-animation: rotate 1.5s infinite linear;
 }
-.running .status div:before {
+.running .status .icon:before {
   content: 'r';
 }
 .daemon.running .status {
   background: #8cba7b;
 }
-.daemon.running .status div {
+.daemon.running .status .icon {
   -webkit-animation: none;
 }
-.daemon.running .status div:before {
+.daemon.running .status .icon:before {
+  content: 'r';
+}
+.daemon.running .status .icon:after {
   content: 'D';
+  position: absolute;
+  right: 0.1rem;
+  bottom: 0.1rem;
+  line-height: 1;
+  font-size: 1rem;
+  color: rgba(255,255,255,0.9);
+  text-shadow: 0 0 4px rgba(0,0,0,0.5);
 }
 .errorMsg:not(:empty) {
   float: right;

@@ -1,5 +1,5 @@
 <div class="status">
-    <div></div>
+    <div class="icon"></div>
 </div>
 
 <div>
