@@ -17,7 +17,7 @@ Config.prototype = {
     getRootDir: function() { return this.rootDir },
     getWindowSettings: function() {
         var w = this.parsed.window || {};
-        w.width = w.width || 400;     // Default width if none is specified
+        w.width = w.width || 300;     // Default width if none is specified
         w.alwaysOnTop = w.alwaysOnTop || false;
         return w;
     },

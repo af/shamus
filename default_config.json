@@ -1,6 +1,7 @@
 {
     "window": {
         "alwaysOnTop": true,
+        "width": 300,
         "top": 0,
         "right": 0
     },
